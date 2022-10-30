@@ -1,19 +1,19 @@
 {
     "team": [
         {
-            "name": "Team Member Name 1",
-            "email": "email@eng.pdn.ac.lk",
-            "eNumber": "E/yy/xxx"
+            "name": "Konara K.M.S.L",
+            "email": "e18181@eng.pdn.ac.lk",
+            "eNumber": "E/18/181"
         },
         {
-            "name": "Team Member Name 2",
-            "email": "email@eng.pdn.ac.lk",
-            "eNumber": "E/yy/xxx"
+            "name": "Rathnayake R.M.P.P.",
+            "email": "e18297@eng.pdn.ac.lk",
+            "eNumber": "E/18/297"
         },
         {
-            "name": "Team Member Name 3",
-            "email": "email@eng.pdn.ac.lk",
-            "eNumber": "E/yy/xxx"
+            "name": "Wimalasiri K.H.C.T",
+            "email": "e18402@eng.pdn.ac.lk",
+            "eNumber": "E/18/402"
         }
     ],
     "supervisors": [
