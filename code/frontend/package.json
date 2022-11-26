@@ -6,6 +6,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fontsource/public-sans": "^4.5.11",
+    "@mui/icons-material": "^5.10.15",
     "@mui/joy": "^5.0.0-alpha.54",
     "@mui/material": "^5.10.15",
     "@testing-library/jest-dom": "^5.16.5",
