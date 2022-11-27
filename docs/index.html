@@ -58,10 +58,10 @@
         <ul>
           <li><a href="index.html" class="active">Home</a></li>
           <li><a href="#why-us">About</a></li>
-          <li><a href="#">Architecture</a></li>
+          <li><a href="#architecture">Architecture</a></li>
           <li class="dropdown"><a href="#"><span>Design</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
-              <li><a href="#">Devices</a></li>
+              <li><a href="#devices">Devices</a></li>
               <li><a href="#">UI/UX</a></li>
             </ul>
           </li>
@@ -73,8 +73,8 @@
           </li>
           <li class="dropdown"><a href="#"><span>Software</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a> 
             <ul>
-              <li><a href="#">Frontend</a></li>
-              <li><a href="#">Backend</a></li>
+              <li><a href="#frontend">Frontend</a></li>
+              <li><a href="#backend">Backend</a></li>
             </ul>
           </li>
           <li class="dropdown"><a href="#"><span>Other</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a> 
@@ -82,8 +82,8 @@
               <li><a href="#">Hardware Functionalities</a></li>
               <li><a href="#">Security Aspects</a></li>
               <li><a href="#">Features</a></li>
-              <li><a href="#">Timeline</a></li>
-              <li><a href="#">Budget</a></li>
+              <li><a href="#timeline">Timeline</a></li>
+              <li><a href="#budget">Budget</a></li>
             </ul>
           </li>
   <!--   <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
@@ -180,6 +180,258 @@
 
       </div>
     </section><!-- End Why Choose Us Section -->
+	
+	<!-- =======  Architecture Section ======= -->
+	
+	<section id="architecture" class="services-list">
+	<div class="container" data-aos="fade-up">
+	<div class="section-header">
+          <h2>DESIGN ARCHITECTURE</h2>
+
+        </div>
+	<div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
+          <div class="row g-0">
+            <div class="col-md-6">
+              <a href="assets/img/architecture/system_zoom.png"  data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><img src="assets/img/architecture/system_zoom.png" class="img-fluid" alt=""></a>
+                  
+            </div>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h3 class="card-title">System</h3>
+                <p class="card-text">
+                  We proposed a solution: a smart pet collar. It is a wearable and waterproof device. 
+				  Therefore, you need to wear it on your pet and connect it to your PC or mobile phone. Simply put, you can easily obtain corresponding details. 
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
+          <div class="row g-0">
+            <div class="col-md-6" style="background-color: rgba(255,255,255)" >
+              <a href="assets/img/architecture/high_level_system.png" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><img src="assets/img/architecture/high_level_system.png" class="img-fluid" alt=""></a>
+                  
+            </div>
+            <div class="col-md-6">
+              <div class="card-body" >
+                <h3 class="card-title">High-level System </h3>
+                <p class="card-text">
+                  This is the high-level architecture diagram of our system. Inside this device, we have a microcontroller and several sensors and other modules. Since this is a wearable device for pets, 
+				  we can’t use a direct power supply. So we use a rechargeable battery, so the user can charge it once every few days. 
+				  One of the main features of this system is tracking the pet’s location. For that, we use a GPS module, 
+				  which can get location data through GPS satellites. For monitoring health, we get body temperature data and pulse data using a temperature sensor and a pulse sensor. 
+				  We get the data related to orientation and movement using a gyroscope sensor. We use that data for the sleep monitoring feature. 
+				  We also include a speaker with this device, so it can be used to implement a sound-based pet training feature. Finally, this has a GSM/GPRS module, to connect to the internet.
+				  So the device can send the data taken from the sensor to the cloud server.<br><br> 
+				  What if the device lost network connectivity at some point? To address that issue, 
+				  we wanted temporary storage. So the device can store the data temporarily and send it to the server when the network is restored.
+				  On the right side of the figure, we have the user and the application UI. Frontend. It can communicate with the backend and the database through the API. To connect the device with the backend cloud server, 
+				  we will be using a MQTT broker. So we can set up a subscription for the device and share the sensor data and control signals through the MQTT protocol.
+				  We don’t pass real-time data to the server in regular mode. Every sensor's data will have a certain delay between two consecutive measurements. For example, the location data will only be sent once every 15 minutes.</p>
+                                    
+                </p>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+        
+	</div>
+	</section> -->
+    <!-- End Call the Solution Architecture Section -->
+	
+	
+	<!-- =======  Device Section ======= -->
+	
+	<section id="devices" class="services-list">
+	<div class="container" data-aos="fade-up">
+	<div class="section-header">
+          <h2>DEVICES</h2>
+
+        </div>
+		
+		<div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
+          <div class="row g-0">
+            <div class="col-md-6">
+              <a href="assets/img/devices/device.png"  data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><img src="assets/img/devices/device.png" class="img-fluid" alt=""></a>
+                  
+            </div>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h3 class="card-title">Smart Pet Collar</h3>
+                <p class="card-text">
+                  This is a waterproof and wearable device. All the circuit components are in the white box. It fits the dog's back perfectly. 
+				  Therefore, it has no extra weight on the dog. 
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+		
+	</div>
+	</section> -->
+	<!-- End Call the Device Section -->
+	
+	
+	<!-- =======  Frontend Section ======= -->
+	<section id="frontend" class="services-list">
+	<div class="container" data-aos="fade-up">
+	
+	<div class="section-header">
+          <h2>FRONTEND</h2>
+
+	</div>
+	
+	<div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
+          <div class="row g-0">
+            <div class="col-md-6">
+              <a href="assets/img/frontend/frontend_interface.png"  data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><img src="assets/img/frontend/frontend_interface.png" class="img-fluid" alt=""></a>
+                  
+            </div>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h3 class="card-title">User Interface</h3>
+                <p class="card-text">
+                  The user gets access to his dashboard. Here’s a draft design we created for the user dashboard. On the homepage, a summary of the latest data can be seen. 
+				  Here we have a sync button to request the latest data, which are vitals, sleep tracking history, and the last known location. 
+				  There will be separate pages for more detailed location tracking, health, training, and settings. 
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+		
+	
+	<div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
+          <div class="row g-0">
+            <div class="col-md-6">
+              <a href="assets/img/frontend/frontend_tech.png"  data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><img src="assets/img/frontend/frontend_tech.png" class="img-fluid" alt=""></a>
+                  
+            </div>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h3 class="card-title">Technology Stack</h3>
+                <p class="card-text">
+                  <ul>
+						<li>React <p>The React.js framework is an open-source JavaScript framework and library developed by Facebook. 
+						It’s used for building interactive user interfaces and web applications quickly and efficiently 
+						with significantly less code than you would with vanilla JavaScript.</p>
+						</li>
+						<li>JavaScript <p>JavaScript is a scripting or programming language that allows you to implement complex features on 
+						web pages.</p>
+						</li>
+				  </ul>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+	
+	
+	</div>
+	</section> -->
+	<!-- End Call the Frontend Section -->
+	
+	
+	<!-- =======  Backend Section ======= -->
+	<section id="backend" class="services-list">
+	<div class="container" data-aos="fade-up">
+	
+	<div class="section-header">
+          <h2>BACKEND</h2>
+
+	</div>
+	
+	<div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
+          <div class="row g-0">
+            <div class="col-md-6">
+              <a href="assets/img/backend/er_diagram.png"  data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><img src="assets/img/backend/er_diagram.png" class="img-fluid" alt=""></a>
+                  
+            </div>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h3 class="card-title">Database | ER Diagram</h3>
+                <p class="card-text">
+					As you can see, all the entities have primary keys. Without a single relation, all relations are 1:N. 
+					Because a collar has only one owner, the owner can access multiple options. The "CONNECTS_TO" relation is 1:1 because only one collar has one pet. 
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+		
+	
+	<div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
+          <div class="row g-0">
+            <div class="col-md-6" style="background-color: rgba(255,255,255)">
+              <a href="assets/img/backend/backend_tech.png"  data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><img src="assets/img/backend/backend_tech.png" class="img-fluid" alt=""></a>
+                  
+            </div>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h3 class="card-title">Technology Stack</h3>
+                <p class="card-text">
+				<ul>
+					<li>ExpressJS <p>Express is a node js web application framework that 
+					provides broad features for building web and mobile applications. 
+					It is used to build a single page, multipage, and hybrid web application.</p>
+					</li>
+					<li>MongoDB <p>MongoDB is a document database used to build highly available and scalable internet applications. 
+					With its flexible schema approach, it's popular with development teams using agile methodologies.</p> 
+					</li>
+					<li>Eclipse Mosquitto <p>The MQTT protocol provides a lightweight method of carrying out messaging using a publish/subscribe model.</p>
+					</li>
+					<li>AWS <p>AWS is designed to allow application providers, ISVs, and vendors to quickly and securely host your applications
+					 – whether an existing application or a new SaaS-based application.</p>
+					</li>
+				</ul>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+	
+	
+	</div>
+	</section> -->
+	<!-- End Call the Backend Section -->
+	
+	
+	<!-- =======  Timeline Section ======= -->
+	
+	<section id="timeline" class="services-list">
+	<div class="container" data-aos="fade-up">
+	<div class="section-header">
+          <h2>TIMELINE</h2>
+
+        </div>
+		<div class="row d-flex justify-content-center" align="center">
+			<a href="assets/img/timeline/timeline.png"  data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><img src="assets/img/timeline/timeline.png" class="img-fluid" alt=""></a>
+		</div>
+		
+		
+	</div>
+	</section> -->
+	<!-- End Call the Timeline Section -->
+	
+	
+	<!-- =======  Budget Section ======= -->
+	
+	<section id="budget" class="services-list">
+	<div class="container" data-aos="fade-up">
+	<div class="section-header">
+          <h2>BUDGET</h2>
+
+        </div>
+		<div class="row d-flex justify-content-center" align="center">
+			<a href="assets/img/budget/budget.png"  data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><img src="assets/img/budget/budget.png" class="img-fluid" alt=""></a>
+		</div>
+		
+		
+	</div>
+	</section> -->
+	<!-- End Call the Timeline Section -->
+	
 
     <!-- ======= Our Services Section ======= -->
     <!-- <section id="services-list" class="services-list">
