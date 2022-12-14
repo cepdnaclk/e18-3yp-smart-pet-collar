@@ -5,6 +5,7 @@ import {
   MonitorHeart,
   Settings,
   SportsSoccer,
+  Vaccines,
 } from "@mui/icons-material";
 
 const navConfig = [
@@ -22,6 +23,11 @@ const navConfig = [
     title: "health",
     path: "/dashboard/health",
     icon: <MonitorHeart />,
+  },
+  {
+    title: "vaccination",
+    path: "/dashboard/vaccination",
+    icon: <Vaccines />,
   },
   {
     title: "training",

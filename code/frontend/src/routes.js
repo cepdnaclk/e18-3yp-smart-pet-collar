@@ -1,44 +1,46 @@
-import { Navigate, useRoutes } from 'react-router-dom';
+import { Navigate, useRoutes } from "react-router-dom";
 // layouts
-import DashboardLayout from './layouts/dashboard';
-import SimpleLayout from './layouts/simple';
+import DashboardLayout from "./layouts/dashboard";
+import SimpleLayout from "./layouts/simple";
 //
-import BlogPage from './pages/BlogPage';
-import UserPage from './pages/UserPage';
-import LoginPage from './pages/LoginPage';
-import Page404 from './pages/Page404';
-import ProductsPage from './pages/ProductsPage';
-import Dashboard from './pages/DashboardAppPage';
+import LoginPage from "./pages/LoginPage";
+import Page404 from "./pages/Page404";
+import Dashboard from "./pages/DashboardAppPage";
+import HealthPage from "./pages/Health";
+import TrainingPage from "./pages/TrainingPage";
+import VaccinationPage from "./pages/VaccinationPage";
+import LocationPage from "./pages/LocationPage";
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
   const routes = useRoutes([
     {
-      path: '/dashboard',
+      path: "/dashboard",
       element: <DashboardLayout />,
       children: [
         { element: <Navigate to="/dashboard/home" />, index: true },
-        { path: 'home', element: <Dashboard /> },
-        // { path: 'user', element: <UserPage /> },
-        // { path: 'products', element: <ProductsPage /> },
-        // { path: 'blog', element: <BlogPage /> },
+        { path: "home", element: <Dashboard /> },
+        { path: "health", element: <HealthPage /> },
+        { path: "vaccination", element: <VaccinationPage /> },
+        { path: "training", element: <TrainingPage /> },
+        { path: "location", element: <LocationPage /> },
       ],
     },
     {
-      path: 'login',
+      path: "login",
       element: <LoginPage />,
     },
     {
       element: <SimpleLayout />,
       children: [
         { element: <Navigate to="/dashboard/home" />, index: true },
-        { path: '404', element: <Page404 /> },
-        { path: '*', element: <Navigate to="/404" /> },
+        { path: "404", element: <Page404 /> },
+        { path: "*", element: <Navigate to="/404" /> },
       ],
     },
     {
-      path: '*',
+      path: "*",
       element: <Navigate to="/404" replace />,
     },
   ]);
