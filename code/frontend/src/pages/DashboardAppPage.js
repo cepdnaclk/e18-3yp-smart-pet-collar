@@ -1,15 +1,21 @@
 import { Helmet } from "react-helmet-async";
 // @mui
-import { Grid, Container, Typography } from "@mui/material";
+import { Grid, Container, Typography, Stack, Button } from "@mui/material";
 // sections
-import { AppWebsiteVisits, AppWidgetSummary } from "../sections/@dashboard/app";
+import {
+  AppBarChart,
+  AppDataRecords,
+  AppWidgetSummary,
+} from "../sections/@dashboard/app";
 import {
   Bedtime,
   MonitorHeart,
   Straighten,
+  Sync,
   Thermostat,
 } from "@mui/icons-material";
 import AppMap from "src/sections/@dashboard/app/AppMap";
+import { faker } from "@faker-js/faker";
 
 // ----------------------------------------------------------------------
 
@@ -21,10 +27,24 @@ export default function DashboardAppPage() {
       </Helmet>
 
       <Container maxWidth="xl">
-        <Typography variant="h4">Hello, Noah</Typography>
-        <Typography variant="subtitle1" sx={{ mb: 5, color: "text.secondary" }}>
-          Welcome to PetSmart Dashboard!
-        </Typography>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Stack direction="column">
+            <Typography variant="h4">Hello, Noah</Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{ mb: 5, color: "text.secondary" }}
+            >
+              Welcome to PetSmart Dashboard!
+            </Typography>
+          </Stack>
+          <Button variant="contained" startIcon={<Sync />}>
+            Sync now
+          </Button>
+        </Stack>
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
@@ -63,7 +83,7 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
-            <AppWebsiteVisits
+            <AppBarChart
               title="Sleeping Time"
               subheader="Monitor your pet's sleeping time"
               chartLabels={[
@@ -100,6 +120,31 @@ export default function DashboardAppPage() {
             <AppMap
               title={"Your pet's last known location"}
               subheader={"Last updated 2 hours ago"}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={8}>
+            <AppDataRecords
+              title="Recent Vitals"
+              headersList={[
+                { id: "temperature", label: "Temperature" },
+                { id: "pulseRate", label: "Pulse Rate" },
+                { id: "dateTime", label: "Date & Time" },
+              ]}
+              list={[...Array(5)]
+                .map((_, index) => ({
+                  id: faker.datatype.uuid(),
+                  temperature: `${faker.datatype.number({
+                    min: 20,
+                    max: 40,
+                  })} °C`,
+                  pulseRate: `${faker.datatype.number({
+                    min: 60,
+                    max: 80,
+                  })} bpm`,
+                  dateTime: faker.date.recent(),
+                }))
+                .sort((a, b) => b.dateTime - a.dateTime)}
             />
           </Grid>
         </Grid>
