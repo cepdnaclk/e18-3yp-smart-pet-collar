@@ -2,36 +2,34 @@ const mongoose = require("mongoose"); // imports mongoose
 const Schema = mongoose.Schema; // defines the strcuture of documents inside a collection
 
 const userSchema = new Schema({
-  FName: {
+  firstName: {
     type: String,
     required: true,
     max: 255,
   },
 
-  LName: {
+  lastName: {
     type: String,
     required: true,
     max: 255,
   },
 
   longitude: {
-    type: int,
-    required: true,
+    type: Number,
   },
 
   latitude: {
-    type: int,
-    required: true,
+    type: Number,
   },
 
-  Email: {
+  email: {
     type: String,
     required: true,
     unique: true,
     max: 255,
   },
 
-  Phone: {
+  phone: {
     type: String,
     required: true,
     max: 10,
@@ -41,10 +39,8 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  //password: {type: String, default: '', select: false},
-  device: [{ type: Schema.Types.ObjectId, ref: "Device" }],
+
+  device: { type: Schema.Types.ObjectId, ref: "Device" },
 });
 
-const UserData = mongoose.model("User", userSchema);
-
-module.exports = { UserData };
+module.exports = mongoose.model("User", userSchema);

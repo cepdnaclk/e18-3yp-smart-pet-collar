@@ -17,17 +17,16 @@ const petSchema = new Schema({
     required: true,
     max: 255,
   },
-  dateofBirth: {
+  dateOfBirth: {
     type: Date,
     required: true,
   },
-  colour: {
+  color: {
     type: String,
-    required: true,
     max: 255,
   },
   weight: {
-    type: String,
+    type: Number,
     required: true,
   },
   species: {
@@ -37,41 +36,86 @@ const petSchema = new Schema({
   },
   specialCharacteristics: {
     type: String,
-    required: true,
   },
 
   // relationship with the Pet (ConnectsTo)
   device: { type: Schema.Types.ObjectId, ref: "Device" }, // FK | maps the Device of the Pet
 
-  vaccination: [
+  // relationship with the User (ConnectsTo)
+  user: { type: Schema.Types.ObjectId, ref: "User" }, // FK | maps the User of the Pet
+
+  vaccinations: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Vaccination",
+      name: {
+        type: String,
+        required: true,
+        max: 255,
+      },
+
+      status: {
+        type: String,
+        required: true,
+        max: 255,
+      },
+
+      completeDate: {
+        type: Date,
+        required: true,
+      },
+
+      scheduledDate: {
+        type: Date,
+        required: true,
+      },
+
+      label: {
+        type: String,
+        required: true,
+      },
     },
   ],
 
-  vital: [
+  vitals: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Vital",
+      temperature: {
+        type: Number,
+        required: true,
+      },
+
+      heartRate: {
+        type: Number,
+        required: true,
+      },
+
+      DateTime: {
+        type: Date,
+        required: true,
+      },
     },
   ],
 
-  location: [
+  locations: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Location",
+      dateTime: { type: Date, required: true, default: Date.now },
+
+      longitude: {
+        type: Number,
+        required: true,
+      },
+
+      latitude: {
+        type: Number,
+        required: true,
+      },
     },
   ],
 
-  sleep: [
+  sleeps: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Sleep",
+      startTime: { type: Date, required: true, default: Date.now },
+      duration: Number,
     },
   ],
 });
 
-const PetData = mongoose.model("Pet", petSchema);
-
-module.exports = { PetData };
+module.exports = mongoose.model("Pet", petSchema);
