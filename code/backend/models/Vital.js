@@ -1,27 +1,27 @@
-const mongoose = require('mongoose');   // imports mongoose
-const Schema = mongoose.Schema;         // defines the strcuture of documents inside a collection
+const mongoose = require("mongoose"); // imports mongoose
+const Schema = mongoose.Schema; // defines the strcuture of documents inside a collection
 
 const vitalSchema = new Schema({
+  Type: {
+    type: Number,
+    enum: ["Temperature", "Heart Rate"],
+    required: true,
+  },
 
-    Type: {
-        type: Number,
-        enum: ['Temperature', 'Heart Rate'],
-        required: true
-    },
+  Value: {
+    type: Number,
+    required: true,
+  },
 
-    Value: {
-        type: Number,
-        required: true
-    },
+  DateTime: {
+    type: Date,
+    required: true,
+  },
 
-    DateTime: {
-        type: Date,
-        required: true
-    },
+  // relationship with the Pet (Has)
+  pet: { type: Schema.Types.ObjectId, ref: "Pet" },
+});
 
-    // relationship with the Pet (Has)
-    Pet: String  // FK | maps the Pet of the Vital
+const VitalData = mongoose.model("Vital", vitalSchema);
 
-}, { collection: 'Vital' })
-
-module.exports = mongoose.model(vitalSchema, 'VitalModel');
+module.exports = { VitalData };

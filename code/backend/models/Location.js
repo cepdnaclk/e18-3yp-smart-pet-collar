@@ -1,21 +1,23 @@
-const mongoose = require('mongoose');   // imports mongoose
-const Schema = mongoose.Schema;         // defines the strcuture of documents inside a collection
+const mongoose = require("mongoose"); // imports mongoose
+const Schema = mongoose.Schema; // defines the strcuture of documents inside a collection
 
 const locationSchema = new Schema({
-    DatetTime: { type: Date, required: true, default: Date.now },
-    longitude: {
-        type: int,
-        required: true
-    },
+  datetTime: { type: Date, required: true, default: Date.now },
 
-    latitude: {
-        type: int,
-        required: true
-    },
+  longitude: {
+    type: int,
+    required: true,
+  },
 
-    // relationship with the Pet (Has)
-    Pet: String  // FK | maps the Pet of the Location
+  latitude: {
+    type: int,
+    required: true,
+  },
 
-}, { collection: 'Location' })
+  // relationship with the Pet (Has)
+  pet: { type: Schema.Types.ObjectId, ref: "Pet" },
+});
 
-module.exports = mongoose.model(locationSchema, 'LocationModel');
+const LocationData = mongoose.model("Location", locationSchema);
+
+module.exports = { LocationData };

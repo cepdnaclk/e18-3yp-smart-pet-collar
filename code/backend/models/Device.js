@@ -12,8 +12,15 @@ const deviceSchema = new Schema({
     required: true,
   },
   status: String,
+
+  user: { type: Schema.Types.ObjectId, ref: "User" },
+
+  pet: { type: Schema.Types.ObjectId, ref: "Pet" },
 });
 
 // export model
 // here the first argument is the singular name of the collection
-module.exports = mongoose.model("Device", deviceSchema);
+
+const DeviceData = mongoose.model("Device", deviceSchema);
+
+module.exports = { DeviceData };
