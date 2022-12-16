@@ -11,6 +11,7 @@ app.use(express.json());
 // Routes
 app.use(require("./routes/deviceRoutes"));
 app.use(require("./routes/userRoutes"));
+app.use(require("./routes/petRoutes"));
 
 // Start server
 app.listen(port, async () => {

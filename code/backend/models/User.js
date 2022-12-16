@@ -41,6 +41,7 @@ const userSchema = new Schema({
   },
 
   device: { type: Schema.Types.ObjectId, ref: "Device" },
+  pet: { type: Schema.Types.ObjectId, ref: "Pet" },
 });
 
 module.exports = mongoose.model("User", userSchema);
