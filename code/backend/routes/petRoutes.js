@@ -9,6 +9,45 @@ const router = express.Router();
 
 const user_id = "639b66fa02e35eb25ff4c774"; // temporary user id for testing (until we build authentication)
 
+// get pet's overview data (latest vital, latest location)
+router.get("/pet/overview", (req, res) => {
+  User.findById(user_id, function (err, user) {
+    if (err) {
+      console.log(err);
+      res.status(400).send("Error fetching user!");
+    } else {
+      let vital, location;
+      if (user.pet.vitals.length === 0) {
+        vital = {
+          heartRate: 0,
+          temperature: 0,
+        };
+      } else {
+        vital = user.pet.vitals.reduce((a, b) =>
+          a.dateTime > b.dateTime ? a : b
+        );
+      }
+
+      if (user.pet.locations.length === 0) {
+        location = {
+          latitude: 0,
+          longitude: 0,
+        };
+      } else {
+        location = user.pet.locations.reduce((a, b) =>
+          a.dateTime > b.dateTime ? a : b
+        );
+      }
+
+      const overview = {
+        location: location,
+        vital: vital,
+      };
+      res.json(overview);
+    }
+  }).populate("pet");
+});
+
 // get pet's all vaccinations
 router.get("/pet/vaccinations", (req, res) => {
   User.findById(user_id, function (err, user) {

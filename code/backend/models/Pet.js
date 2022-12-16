@@ -87,7 +87,7 @@ const petSchema = new Schema({
         required: true,
       },
 
-      DateTime: {
+      dateTime: {
         type: Date,
         required: true,
       },
