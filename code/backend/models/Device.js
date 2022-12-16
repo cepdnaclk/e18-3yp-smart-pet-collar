@@ -8,7 +8,6 @@ const deviceSchema = new Schema({
     required: true,
   },
   status: String,
-  user: { type: Schema.Types.ObjectId, ref: "User" },
   pet: { type: Schema.Types.ObjectId, ref: "Pet" },
 });
 

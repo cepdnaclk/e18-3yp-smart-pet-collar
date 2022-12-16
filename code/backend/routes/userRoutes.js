@@ -50,14 +50,24 @@ router.post("/me/pet", (req, res) => {
     weight: req.body.weight,
   };
 
-  newPet.user = user_id;
-
   Pet.create(newPet, function (err, pet) {
     if (err) {
       console.log(err);
       res.status(400).send("Error creating pet!");
     } else {
-      res.json(pet);
+      User.findByIdAndUpdate(
+        user_id,
+        { pet: pet },
+        { new: true },
+        function (err, user) {
+          if (err) {
+            console.log(err);
+            res.status(400).send("Error adding pet to user!");
+          } else {
+            res.json(pet);
+          }
+        }
+      );
     }
   });
 });
