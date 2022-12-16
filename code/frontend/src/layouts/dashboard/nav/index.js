@@ -103,7 +103,7 @@ export default function Nav({ openNav, onCloseNav }) {
           </Box>
 
           <Button
-            href="https://material-ui.com/store/items/minimal-dashboard/"
+            href="https://cepdnaclk.github.io/e18-3yp-smart-pet-collar/"
             target="_blank"
             variant="contained"
           >
