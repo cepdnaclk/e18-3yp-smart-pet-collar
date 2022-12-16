@@ -60,4 +60,40 @@ router.get("/pet/vaccinations", (req, res) => {
   }).populate("pet");
 });
 
+// get pet's all sleep
+router.get("/pet/sleep", (req, res) => {
+  User.findById(user_id, function (err, user) {
+    if (err) {
+      console.log(err);
+      res.status(400).send("Error fetching user!");
+    } else {
+      res.json(user.pet.sleeps);
+    }
+  }).populate("pet");
+});
+
+// get pet's vitals
+router.get("/pet/vitals", (req, res) => {
+  User.findById(user_id, function (err, user) {
+    if (err) {
+      console.log(err);
+      res.status(400).send("Error fetching user!");
+    } else {
+      res.json(user.pet.vitals);
+    }
+  }).populate("pet");
+});
+
+// get pet's locations 
+router.get("/pet/locations", (req, res) => {
+  User.findById(user_id, function (err, user) {
+    if (err) {
+      console.log(err);
+      res.status(400).send("Error fetching user!");
+    } else {
+      res.json(user.pet.locations);
+    }
+  }).populate("pet");
+});
+
 module.exports = router;
