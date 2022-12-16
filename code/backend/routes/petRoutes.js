@@ -40,7 +40,7 @@ router.get("/pet/vitals", (req, res) => {
       console.log(err);
       res.status(400).send("Error fetching user!");
     } else {
-      res.json(user.pet.vaccinations);
+      res.json(user.pet.vitals);
     }
   }).populate("pet");
 });
