@@ -38,42 +38,7 @@ const petSchema = new Schema({
     type: String,
   },
 
-  // relationship with the Pet (ConnectsTo)
-  device: { type: Schema.Types.ObjectId, ref: "Device" }, // FK | maps the Device of the Pet
-
-  // relationship with the User (ConnectsTo)
-  user: { type: Schema.Types.ObjectId, ref: "User" }, // FK | maps the User of the Pet
-
-  vaccinations: [
-    {
-      name: {
-        type: String,
-        required: true,
-        max: 255,
-      },
-
-      status: {
-        type: String,
-        required: true,
-        max: 255,
-      },
-
-      completeDate: {
-        type: Date,
-        required: true,
-      },
-
-      scheduledDate: {
-        type: Date,
-        required: true,
-      },
-
-      label: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
+  vaccinations: [{ type: Schema.Types.ObjectId, ref: "Vaccination" }],
 
   vitals: [
     {
