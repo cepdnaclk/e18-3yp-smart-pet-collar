@@ -20,8 +20,8 @@ export default function SignupForm() {
     let lastName = document.getElementById("lname").value;
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
-    let deviceId = document.getElementById("device").value;
-    let devicePin = document.getElementById("pin").value;
+    let device = document.getElementById("device").value;
+    let pin = document.getElementById("pin").value;
 
     try {
       const result = await axios.post("http://localhost:3001/signup", {
@@ -29,8 +29,8 @@ export default function SignupForm() {
         lastName: lastName,
         email: email,
         password: password,
-        deviceId: deviceId,
-        devicePin: devicePin,
+        device: device,
+        pin: pin,
       });
 
       if (result.status === 201) {
@@ -44,7 +44,7 @@ export default function SignupForm() {
       }
     } catch (error) {
       if (error.response.status === 400) {
-        console.log(error.response.message);
+        console.log(error.response.data);
       } else {
         console.log("Something went wrong");
       }
