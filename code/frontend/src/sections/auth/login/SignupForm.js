@@ -34,10 +34,7 @@ export default function SignupForm() {
       });
 
       if (result.status === 201) {
-        login({
-          email: email,
-          password: password,
-        });
+        login(result.data);
         navigate("/dashboard", { replace: true });
       } else {
         console.log("Something went wrong");

@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { filter } from "lodash";
 import { sentenceCase } from "change-case";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // @mui
 import {
   Card,
@@ -29,11 +29,17 @@ import Label from "../components/label";
 import Iconify from "../components/iconify";
 import Scrollbar from "../components/scrollbar";
 // mock
-import VACCINATION_LIST from "../_mock/vaccinations";
 import DataTableHead from "src/sections/@dashboard/datatable/DataTableHead";
-import { fDateTime } from "src/utils/formatTime";
+import { fDate } from "src/utils/formatTime";
 import { AppOrderTimeline } from "src/sections/@dashboard/app";
 import { faker } from "@faker-js/faker";
+import axios from "axios";
+import { useOutletContext } from "react-router-dom";
+
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { Delete, Edit, MoreVert } from "@mui/icons-material";
 
 // ----------------------------------------------------------------------
 
@@ -82,6 +88,7 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function VaccinationPage() {
+  const user = useOutletContext();
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
@@ -96,11 +103,81 @@ export default function VaccinationPage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleOpenMenu = (event) => {
+  const [vaccinations, setVaccinations] = useState([]);
+
+  const [scheduledDate, setScheduledDate] = useState(null);
+
+  const [deleteId, setDeleteId] = useState(null);
+
+  // get all vaccinations through axios
+  useEffect(() => {
+    getVaccinations();
+    // eslint-disable-next-line
+  }, []);
+
+  const getVaccinations = () => {
+    axios
+      .get("http://localhost:3001/pet/vaccinations", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then((response) => {
+        setVaccinations(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleSubmit = async () => {
+    const vaccination = {
+      name: document.getElementById("vname").value,
+      label: document.getElementById("label").value,
+      scheduledDate: scheduledDate,
+      completedDate: null,
+      status: "scheduled",
+    };
+    axios
+      .post("http://localhost:3001/pet/vaccinations", vaccination, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then((response) => {
+        console.log("Successfully scheduled");
+        getVaccinations();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleDelete = async () => {
+    axios
+      .delete(`http://localhost:3001/pet/vaccinations/${deleteId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then((response) => {
+        console.log("Successfully deleted");
+        getVaccinations();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    handleCloseMenu();
+  };
+
+  const handleOpenMenu = (event, _id) => {
+    setDeleteId(_id);
     setOpen(event.currentTarget);
   };
 
   const handleCloseMenu = () => {
+    setDeleteId(null);
     setOpen(null);
   };
 
@@ -112,7 +189,7 @@ export default function VaccinationPage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = VACCINATION_LIST.map((n) => n.name);
+      const newSelecteds = vaccinations.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -152,12 +229,10 @@ export default function VaccinationPage() {
   };
 
   const emptyRows =
-    page > 0
-      ? Math.max(0, (1 + page) * rowsPerPage - VACCINATION_LIST.length)
-      : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - vaccinations.length) : 0;
 
   const filteredVaccinations = applySortFilter(
-    VACCINATION_LIST,
+    vaccinations,
     getComparator(order, orderBy),
     filterName
   );
@@ -183,6 +258,11 @@ export default function VaccinationPage() {
           <Button
             variant="contained"
             startIcon={<Iconify icon="eva:plus-fill" />}
+            onClick={() => {
+              document.getElementById("add_form").scrollIntoView({
+                behavior: "smooth",
+              });
+            }}
           >
             Add New
           </Button>
@@ -198,7 +278,7 @@ export default function VaccinationPage() {
                       order={order}
                       orderBy={orderBy}
                       headLabel={TABLE_HEAD}
-                      rowCount={VACCINATION_LIST.length}
+                      rowCount={vaccinations.length}
                       numSelected={selected.length}
                       onRequestSort={handleRequestSort}
                       onSelectAllClick={handleSelectAllClick}
@@ -211,7 +291,7 @@ export default function VaccinationPage() {
                         )
                         .map((row) => {
                           const {
-                            id,
+                            _id,
                             name,
                             label,
                             status,
@@ -219,12 +299,11 @@ export default function VaccinationPage() {
                             completedDate,
                           } = row;
                           const selectedVaccination =
-                            selected.indexOf(name) !== -1;
-
+                            selected.indexOf(_id) !== -1;
                           return (
                             <TableRow
                               hover
-                              key={id}
+                              key={_id}
                               tabIndex={-1}
                               role="checkbox"
                               selected={selectedVaccination}
@@ -232,7 +311,7 @@ export default function VaccinationPage() {
                               <TableCell padding="checkbox">
                                 <Checkbox
                                   checked={selectedVaccination}
-                                  onChange={(event) => handleClick(event, name)}
+                                  onChange={(event) => handleClick(event, _id)}
                                 />
                               </TableCell>
 
@@ -245,11 +324,13 @@ export default function VaccinationPage() {
                               <TableCell align="left">{label}</TableCell>
 
                               <TableCell align="left">
-                                {fDateTime(scheduledDate)}
+                                {fDate(scheduledDate)}
                               </TableCell>
 
                               <TableCell align="left">
-                                {fDateTime(completedDate)}
+                                {completedDate == null
+                                  ? "Not Completed"
+                                  : fDate(completedDate)}
                               </TableCell>
 
                               <TableCell align="left">
@@ -267,9 +348,12 @@ export default function VaccinationPage() {
                                 <IconButton
                                   size="large"
                                   color="inherit"
-                                  onClick={handleOpenMenu}
+                                  key={_id}
+                                  onClick={(event) => {
+                                    handleOpenMenu(event, _id);
+                                  }}
                                 >
-                                  <Iconify icon={"eva:more-vertical-fill"} />
+                                  <MoreVert />
                                 </IconButton>
                               </TableCell>
                             </TableRow>
@@ -313,7 +397,7 @@ export default function VaccinationPage() {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={VACCINATION_LIST.length}
+                count={vaccinations.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
@@ -340,21 +424,31 @@ export default function VaccinationPage() {
           </Grid>
 
           <Grid item xs={12} md={6} lg={9}>
-            <Card>
+            <Card id="add_form">
               <CardHeader
                 title="Add new vaccination"
                 subheader="Insert the vaccination details"
               />
               <Stack spacing={3} padding={3}>
-                <TextField name="email" id="email" label="Vaccine Name" />
-                <TextField name="email" id="email" label="Label (Optional)" />
-                <TextField name="email" id="email" label="Scheduled On" />
+                <TextField name="vname" id="vname" label="Vaccine Name" />
+                <TextField name="label" id="label" label="Label (Optional)" />
+                {/* <TextField name="scheduledOn" id="scheduledOn" type="date" label="Scheduled On" /> */}
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Scheduled Date"
+                    value={scheduledDate}
+                    onChange={(newValue) => {
+                      setScheduledDate(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
 
                 <Button
                   size="large"
                   type="submit"
                   variant="contained"
-                  onClick={null}
+                  onClick={handleSubmit}
                 >
                   Submit
                 </Button>
@@ -383,12 +477,12 @@ export default function VaccinationPage() {
         }}
       >
         <MenuItem>
-          <Iconify icon={"eva:edit-fill"} sx={{ mr: 2 }} />
+          <Edit />
           Edit
         </MenuItem>
 
-        <MenuItem sx={{ color: "error.main" }}>
-          <Iconify icon={"eva:trash-2-outline"} sx={{ mr: 2 }} />
+        <MenuItem sx={{ color: "error.main" }} onClick={handleDelete}>
+          <Delete />
           Delete
         </MenuItem>
       </Popover>

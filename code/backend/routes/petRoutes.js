@@ -106,6 +106,7 @@ router.post("/pet/vaccinations", authenticateToken, (req, res) => {
   const newVaccination = {
     name: req.body.name,
     scheduledDate: req.body.scheduledDate,
+    label: req.body.label,
     status: "pending",
   };
 
