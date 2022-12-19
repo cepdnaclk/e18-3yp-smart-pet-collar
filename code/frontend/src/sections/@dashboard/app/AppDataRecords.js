@@ -59,7 +59,7 @@ export default function AppDataRecords({
               divider={<Divider orientation="vertical" flexItem />}
             >
               {headersList.map((header) => (
-                <Box sx={{ minWidth: 240 }}>
+                <Box sx={{ minWidth: 240 }} key={header.id} >
                   <Typography
                     variant="body2"
                     sx={{ color: "text.secondary" }}

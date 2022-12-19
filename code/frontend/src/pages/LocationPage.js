@@ -2,14 +2,38 @@ import { Helmet } from "react-helmet-async";
 // @mui
 import { Stack, Container, Grid, Typography } from "@mui/material";
 import { AppDataRecords, AppWidgetSummary } from "src/sections/@dashboard/app";
-import { faker } from "@faker-js/faker";
 import { Thermostat } from "@mui/icons-material";
 import AppMap from "src/sections/@dashboard/app/AppMap";
-import { Link } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 // ----------------------------------------------------------------------
 
 export default function LocationPage() {
+  const user = useOutletContext();
+  const [locations, setLocations] = useState([]);
+
+  useEffect(() => {
+    getLocations();
+    // eslint-disable-next-line
+  }, []);
+
+  const getLocations = () => {
+    axios
+      .get("http://localhost:3001/pet/locations", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then((response) => {
+        setLocations(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <Helmet>
@@ -37,16 +61,20 @@ export default function LocationPage() {
                 { id: "location", label: "Longitude, Latitude" },
                 { id: "link", label: "" },
               ]}
-              list={[...Array(10)]
-                .map((_, index) => ({
-                  id: faker.datatype.uuid(),
-                  location: faker.datatype.number({
-                    min: -90,
-                    max: 90,
-                    precision: 0.00000001,
-                  }),
-                  dateTime: faker.date.recent(),
-                  link: <Link to={faker.internet.url.name}>View on Map</Link>,
+              list={locations
+                .map((location) => ({
+                  id: location._id,
+                  location: `${location.longitude}, ${location.latitude}`,
+                  dateTime: location.dateTime,
+                  link: (
+                    <a
+                      href={`https://maps.google.com/?q=${location.longitude},${location.latitude}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View on Map
+                    </a>
+                  ),
                 }))
                 .sort((a, b) => b.dateTime - a.dateTime)}
             />

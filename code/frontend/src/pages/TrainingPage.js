@@ -8,10 +8,13 @@ import {
   SourceRounded,
   Speaker,
 } from "@mui/icons-material";
+import { useOutletContext } from "react-router-dom";
 
 // ----------------------------------------------------------------------
 
 export default function TrainingPage() {
+  const user = useOutletContext();
+
   return (
     <>
       <Helmet>
