@@ -1,21 +1,16 @@
-const mongoose = require('mongoose');   // imports mongoose
-const Schema = mongoose.Schema;         // defines the strcuture of documents inside a collection
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
+// schema for device
 const deviceSchema = new Schema({
-    Pin: {
-        type: String,
-        required: true
+  pin: {
+    type: String,
+    required: true,
+  },
+  status: String,
+  pet: { type: Schema.Types.ObjectId, ref: "Pet" },
+});
 
-    },
-
-    Status: {
-        type: String,
-        required: true,
-        max: 32768
-    },
-
-    // relationship with the Pet (own)
-    User: String  // FK | maps the Pet of the Device
-}, { collection: 'Device' })
-
-module.exports = mongoose.model(deviceSchema, 'DeviceModel');
+// export model
+// here the first argument is the singular name of the collection
+module.exports = mongoose.model("Device", deviceSchema);

@@ -1,23 +1,36 @@
-const express = require('express')
-//const dotenv = require('dotenv')
-//const cors = require('cors')
+const express = require("express");
+const { mongoose } = require("mongoose");
+const cors = require("cors");
+const dotenv = require("dotenv");
 
-//for the HTTPS implementation
-const https = require('https')
-const path = require('path')    //to get path of files
-const fs = require('fs')        //for file handeling
-
+const port = 3001;
 const app = express();
 
-const PORT = 5000;
+dotenv.config(); // Load environment variables
 
+app.use(cors());
+app.use(express.json());
 
-//create an SSL server
-const sslServer = https.createServer({
-    //key of the certificate
-    key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),             //sync file reading is used here because this file is essntial for the server to start
-    //certificate
-    cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
-},app)
+// Routes
+app.use(require("./routes/deviceRoutes"));
+app.use(require("./routes/userRoutes"));
+app.use(require("./routes/petRoutes"));
 
-sslServer.listen(PORT, () => console.log(`Secure server on port ${PORT}`))
+// Start server
+app.listen(port, async () => {
+  const mongoDB = process.env.MONGODB_URI;
+  mongoose.set("strictQuery", true);
+  await mongoose
+    .connect(mongoDB, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    .then(() => {
+      console.log("Connected to MongoDB");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  console.log(`Server is running on port: ${port}`);
+});

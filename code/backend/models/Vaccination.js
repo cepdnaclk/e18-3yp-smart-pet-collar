@@ -1,39 +1,30 @@
-const mongoose = require('mongoose');   // imports mongoose
-const Schema = mongoose.Schema;         // defines the strcuture of documents inside a collection
+const mongoose = require("mongoose"); // imports mongoose
+const Schema = mongoose.Schema; // defines the strcuture of documents inside a collection
 
 const vaccinationSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+    max: 255,
+  },
 
-    Name: {
-        type: String,
-        required: true,
-        max: 255
-    },
+  status: {
+    type: String,
+    max: 255,
+  },
 
-    Status: {
-        type: String,
-        required: true,
-        max: 255
-    },
+  completedDate: {
+    type: Date,
+  },
 
-    CompleteDate: {
-        type: Date,
-        required: true
-    },
+  scheduledDate: {
+    type: Date,
+    required: true,
+  },
 
-    ScheduledDate: {
-        type: Date,
-        required: true
-    },
+  label: {
+    type: String,
+  },
+});
 
-    Lable: {
-        type: String,
-        required: true,
-        max: 255
-    },
-
-    // relationship with the Pet (Has)
-    Pet: String  // FK | maps the Pet of the Vaccination
-
-}, { collection: 'Vaccination' })
-
-module.exports = mongoose.model(vaccinationSchema, 'VaccinationModel');
+module.exports = mongoose.model("Vaccination", vaccinationSchema);

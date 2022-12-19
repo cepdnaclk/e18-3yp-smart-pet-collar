@@ -1,50 +1,46 @@
-const mongoose = require('mongoose');   // imports mongoose
-const Schema = mongoose.Schema;         // defines the strcuture of documents inside a collection
+const mongoose = require("mongoose"); // imports mongoose
+const Schema = mongoose.Schema; // defines the strcuture of documents inside a collection
 
 const userSchema = new Schema({
+  firstName: {
+    type: String,
+    required: true,
+    max: 255,
+  },
 
-    FName: {
-        type: String,
-        required: true,
-        max: 255
-    },
+  lastName: {
+    type: String,
+    required: true,
+    max: 255,
+  },
 
-    LName: {
-        type: String,
-        required: true,
-        max: 255
-    },
+  longitude: {
+    type: Number,
+  },
 
-    longitude: {
-        type: int,
-        required: true
-    },
+  latitude: {
+    type: Number,
+  },
 
-    latitude: {
-        type: int,
-        required: true
-    },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    max: 255,
+  },
 
-    Email: {
-        type: String,
-        required: true,
-        unique: true,
-        max: 255
-    },
+  phone: {
+    type: String,
+    max: 10,
+  },
 
-    Phone: {
-        type: String,
-        required: true,
-        max: 10
-    },
+  password: {
+    type: String,
+    required: true,
+  },
 
-    password: {
-        type: String,
-        required: true
-    }
-    //password: {type: String, default: '', select: false},
-    //
+  device: { type: Schema.Types.ObjectId, ref: "Device" },
+  pet: { type: Schema.Types.ObjectId, ref: "Pet" },
+});
 
-}, { collection: 'User' })
-
-module.exports = mongoose.model(userSchema, 'UserModel');
+module.exports = mongoose.model("User", userSchema);
