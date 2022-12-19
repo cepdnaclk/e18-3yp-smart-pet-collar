@@ -1,4 +1,5 @@
 const express = require("express");
+const { authenticateToken } = require("../auth/jwt");
 const Pet = require("../models/Pet");
 const User = require("../models/User");
 const Vaccination = require("../models/Vaccination");
@@ -8,11 +9,9 @@ const Vaccination = require("../models/Vaccination");
 // The router will be added as a middleware and will take control of requests starting with path /devices.
 const router = express.Router();
 
-const user_id = "639b66fa02e35eb25ff4c774"; // temporary user id for testing (until we build authentication)
-
 // get pet's overview data (latest vital, latest location)
-router.get("/pet/overview", (req, res) => {
-  User.findById(user_id, function (err, user) {
+router.get("/pet/overview", authenticateToken, (req, res) => {
+  User.findById(req.user.user_id, function (err, user) {
     if (err) {
       console.log(err);
       res.status(400).send("Error fetching user!");
@@ -50,8 +49,8 @@ router.get("/pet/overview", (req, res) => {
 });
 
 // get pet's all vaccinations
-router.get("/pet/vaccinations", (req, res) => {
-  User.findById(user_id, function (err, user) {
+router.get("/pet/vaccinations", authenticateToken, (req, res) => {
+  User.findById(req.user.user_id, function (err, user) {
     if (err) {
       console.log(err);
       res.status(400).send("Error fetching user!");
@@ -67,8 +66,8 @@ router.get("/pet/vaccinations", (req, res) => {
 });
 
 // get pet's all sleep data
-router.get("/pet/sleeps", (req, res) => {
-  User.findById(user_id, function (err, user) {
+router.get("/pet/sleeps", authenticateToken, (req, res) => {
+  User.findById(req.user.user_id, function (err, user) {
     if (err) {
       console.log(err);
       res.status(400).send("Error fetching user!");
@@ -79,8 +78,8 @@ router.get("/pet/sleeps", (req, res) => {
 });
 
 // get pet's vitals
-router.get("/pet/vitals", (req, res) => {
-  User.findById(user_id, function (err, user) {
+router.get("/pet/vitals", authenticateToken, (req, res) => {
+  User.findById(req.user.user_id, function (err, user) {
     if (err) {
       console.log(err);
       res.status(400).send("Error fetching user!");
@@ -91,8 +90,8 @@ router.get("/pet/vitals", (req, res) => {
 });
 
 // get pet's locations
-router.get("/pet/locations", (req, res) => {
-  User.findById(user_id, function (err, user) {
+router.get("/pet/locations", authenticateToken, (req, res) => {
+  User.findById(req.user.user_id, function (err, user) {
     if (err) {
       console.log(err);
       res.status(400).send("Error fetching user!");
@@ -103,7 +102,7 @@ router.get("/pet/locations", (req, res) => {
 });
 
 // create vaccination record
-router.post("/pet/vaccinations", (req, res) => {
+router.post("/pet/vaccinations", authenticateToken, (req, res) => {
   const newVaccination = {
     name: req.body.name,
     scheduledDate: req.body.scheduledDate,
@@ -115,7 +114,7 @@ router.post("/pet/vaccinations", (req, res) => {
       console.log(err);
       res.status(400).send("Error creating vaccination!");
     } else {
-      User.findById(user_id, function (err, user) {
+      User.findById(req.user.user_id, function (err, user) {
         if (err) {
           console.log(err);
           res.status(400).send("Error fetching user!");
@@ -130,7 +129,7 @@ router.post("/pet/vaccinations", (req, res) => {
 });
 
 // edit vaccination record
-router.put("/pet/vaccinations/:id", (req, res) => {
+router.put("/pet/vaccinations/:id", authenticateToken, (req, res) => {
   Vaccination.findByIdAndUpdate(
     req.params.id,
     {
@@ -153,8 +152,8 @@ router.put("/pet/vaccinations/:id", (req, res) => {
 });
 
 // delete vaccination record
-router.delete("/pet/vaccinations/:id", (req, res) => {
-  User.findById(user_id, function (err, user) {
+router.delete("/pet/vaccinations/:id", authenticateToken, (req, res) => {
+  User.findById(req.user.user_id, function (err, user) {
     if (err) {
       console.log(err);
       res.status(400).send("Error fetching user!");

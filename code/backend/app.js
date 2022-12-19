@@ -1,9 +1,12 @@
 const express = require("express");
 const { mongoose } = require("mongoose");
 const cors = require("cors");
+const dotenv = require("dotenv");
 
 const port = 3001;
 const app = express();
+
+dotenv.config(); // Load environment variables
 
 app.use(cors());
 app.use(express.json());
@@ -15,8 +18,7 @@ app.use(require("./routes/petRoutes"));
 
 // Start server
 app.listen(port, async () => {
-  const mongoDB =
-    "mongodb+srv://admin:admin123@cluster0.rrsscwc.mongodb.net/petsmart?retryWrites=true&w=majority";
+  const mongoDB = process.env.MONGODB_URI;
   mongoose.set("strictQuery", true);
   await mongoose
     .connect(mongoDB, {
