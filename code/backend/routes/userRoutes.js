@@ -37,8 +37,7 @@ router.post("/signup", (req, res) => {
 // login user
 router.post("/login", (req, res) => {
   User.findOne({ email: req.body.email }, function (err, user) {
-    if (err) {
-      console.log(err);
+    if (err || !user) {
       res.status(400).send("Incorrect credentials!");
     } else {
       // TODO: use hashing and encryption
