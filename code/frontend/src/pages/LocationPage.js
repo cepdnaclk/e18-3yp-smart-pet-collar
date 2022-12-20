@@ -27,7 +27,9 @@ export default function LocationPage() {
         },
       })
       .then((response) => {
-        setLocations(response.data);
+        let locationsList = response.data;
+        locationsList.sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime));
+        setLocations(locationsList);
       })
       .catch((error) => {
         console.log(error);
@@ -42,8 +44,7 @@ export default function LocationPage() {
 
       <Container maxWidth="xl">
         <Typography variant="h4" marginBottom={5}>
-          {" "}
-          Location Tracking{" "}
+          Location Tracking
         </Typography>
 
         <Grid container spacing={3}>
@@ -51,6 +52,7 @@ export default function LocationPage() {
             <AppMap
               title={"Your pet's last known location"}
               subheader={"Last updated 2 hours ago"}
+              location={locations[0]}
             />
           </Grid>
           <Grid item xs={12} md={8} lg={8}>
@@ -89,6 +91,7 @@ export default function LocationPage() {
               <AppMap
                 title={"Recent Locations"}
                 subheader={"Last updated 2 hours ago"}
+                location={locations[0]}
               />
             </Stack>
           </Grid>
