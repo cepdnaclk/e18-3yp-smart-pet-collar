@@ -4,8 +4,9 @@ const Device = require("./models/Device");
 const Pet = require("./models/Pet");
 //const sensor = require("node-dht-sensor");
 
+let device;
 function run() {
-  const device = awsIot.device({
+  device = awsIot.device({
     clientId: "mqtt-explorer-839a6474",
     host: "a26wj855ybmd1h-ats.iot.ap-south-1.amazonaws.com",
     port: 8883,
@@ -41,38 +42,6 @@ function run() {
   device.on("error", function (topic, payload) {
     console.log("Error:", topic, payload.toString());
   });
-
-  // when a new msg arrives on mqtt
-  // mqttClient.on('message', function (topic, message) {
-
-  //   try {
-  //       // MQTT msg  format
-  //       // id,temp,humidity,rainSensor,lightSensor,airQualitySensor
-  //       const splitted = message.toString().split(",");
-  //       const id = splitted[0];
-  //       const temp = splitted[1];
-  //       const humidity = splitted[2];
-  //       const rain = splitted[3];
-  //       const light = splitted[4];
-  //       const air = splitted[5];
-
-  //       // console.log(splitted)
-  //       new SensorData({
-  //           'dateTime': helper.getDateTime(),
-  //           'location': "hanthana",
-  //           'device_id': id,
-  //           'topic': "test",
-  //           'temperature': temp,
-  //           'humidity': humidity,
-  //           'isRaining': rain,
-  //           "lightIntensity": light,
-  //           "airQuality": air
-  //       }).save();
-  //   } catch (error) {
-  //       console.log("Error parsing JSON: " + error);
-  //   }
-
-  // })
 }
 
 function addVital(data) {
@@ -164,4 +133,10 @@ function addSleep(data) {
   });
 }
 
-module.exports = { run };
+function sendData() {
+  const obj = { type: "sync" };
+  console.log("STEP - Requesting data from AWS  IoT Core");
+  device.publish("/device1/", JSON.stringify(obj));
+}
+
+module.exports = { run, sendData };

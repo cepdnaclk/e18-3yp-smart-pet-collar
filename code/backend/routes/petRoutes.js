@@ -1,8 +1,10 @@
 const express = require("express");
 const { authenticateToken } = require("../auth/jwt");
+const { sendData } = require("../awsIot");
 const Pet = require("../models/Pet");
 const User = require("../models/User");
 const Vaccination = require("../models/Vaccination");
+const { getDistanceFromLatLonInM } = require("../util/location_distance");
 
 // router is an instance of the express router.
 // We use it to define our routes.
@@ -16,7 +18,7 @@ router.get("/pet/overview", authenticateToken, (req, res) => {
       console.log(err);
       res.status(400).send("Error fetching user!");
     } else {
-      let vital, location;
+      let vital, location, sleep;
       if (user.pet.vitals.length === 0) {
         vital = {
           heartRate: 0,
@@ -32,16 +34,50 @@ router.get("/pet/overview", authenticateToken, (req, res) => {
         location = {
           latitude: 0,
           longitude: 0,
+          distance: 0,
         };
       } else {
         location = user.pet.locations.reduce((a, b) =>
           a.dateTime > b.dateTime ? a : b
+        );
+        let distance = getDistanceFromLatLonInM(
+          user.latitude,
+          user.longitude,
+          location.latitude,
+          location.longitude
+        );
+        location = { ...location._doc, distance: distance };
+      }
+
+      if (user.pet.sleeps.length === 0) {
+        sleep = {
+          duration: 0,
+        };
+      } else {
+        let sleeps = user.pet.sleeps.filter((sleep) => {
+          let sleepDate = new Date(sleep.startTime);
+          let today = new Date();
+          return (
+            sleepDate.getDate() === today.getDate() &&
+            sleepDate.getMonth() === today.getMonth() &&
+            sleepDate.getFullYear() === today.getFullYear()
+          );
+        });
+
+        sleep = sleeps.reduce(
+          (a, b) => {
+            return {
+              duration: a.duration + b.duration,
+            };
+          },
+          { duration: 0 }
         );
       }
 
       const overview = {
         location: location,
         vital: vital,
+        sleep: sleep,
       };
       res.json(overview);
     }
@@ -192,6 +228,12 @@ router.delete("/pet/vaccinations/:id", authenticateToken, (req, res) => {
       res.json(null);
     }
   });
+});
+
+// sync pet's data (sends a request to device to sync data)
+router.post("/pet/sync", authenticateToken, (req, res) => {
+  sendData();
+  res.status(200).json(null);
 });
 
 module.exports = router;

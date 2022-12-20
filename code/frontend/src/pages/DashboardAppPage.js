@@ -24,21 +24,58 @@ import axios from "axios";
 export default function DashboardAppPage() {
   const user = useOutletContext();
   const [vitals, setVitals] = useState([]);
+  const [overview, setOverview] = useState(null);
 
   useEffect(() => {
     getVitals();
+    getOverview();
     // eslint-disable-next-line
   }, []);
 
   const getVitals = () => {
     axios
-      .get("http://43.205.113.198:3001/pet/vitals", {
+      .get("http://localhost:3001/pet/vitals", {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
       })
       .then((response) => {
         setVitals(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const getOverview = () => {
+    axios
+      .get("http://localhost:3001/pet/overview", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then((response) => {
+        setOverview(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleSync = () => {
+    axios
+      .post(
+        "http://localhost:3001/pet/sync",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        getVitals();
+        getOverview();
       })
       .catch((error) => {
         console.log(error);
@@ -65,7 +102,7 @@ export default function DashboardAppPage() {
               Welcome to PetSmart Dashboard!
             </Typography>
           </Stack>
-          <Button variant="contained" startIcon={<Sync />}>
+          <Button variant="contained" startIcon={<Sync />} onClick={handleSync}>
             Sync now
           </Button>
         </Stack>
@@ -74,15 +111,15 @@ export default function DashboardAppPage() {
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
               title="Temperature"
-              value="30 C"
+              value={overview?.vital.temperature + " ℃"}
               icon={<Thermostat />}
             />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
-              title="Pulse Rate"
-              value="70 bpm"
+              title="Heart Rate"
+              value={overview?.vital.heartRate + " bpm"}
               color="info"
               icon={<MonitorHeart />}
             />
@@ -91,7 +128,7 @@ export default function DashboardAppPage() {
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
               title="Sleep Status"
-              value="3 Hours"
+              value={overview?.sleep.duration + " min"}
               color="warning"
               icon={<Bedtime />}
             />
@@ -100,7 +137,7 @@ export default function DashboardAppPage() {
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
               title="Distance from Home"
-              value="50 m"
+              value={overview?.location.distance + " m"}
               color="error"
               icon={<Straighten />}
             />
