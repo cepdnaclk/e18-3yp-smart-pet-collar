@@ -18,11 +18,21 @@ myAWSIoTMQTTClient = AWSIoTPyMQTT.AWSIoTMQTTClient(CLIENT_ID)
 myAWSIoTMQTTClient.configureEndpoint(ENDPOINT, 8883)
 myAWSIoTMQTTClient.configureCredentials(PATH_TO_AMAZON_ROOT_CA_1, PATH_TO_PRIVATE_KEY, PATH_TO_CERTIFICATE)
 
-def sync_but(self, params, packet):
-	print(packet.payload)
-
-
 myAWSIoTMQTTClient.connect()
+
+def sync_but(Client, userData, message):
+    j2 = json.loads(message.payload)
+    if j2["type"] == "sync":
+        message_vital = {"device_id":"639b588cfba69d57d680e6eb", "type" : "vitals", "temperature":20.1, "heartRate":100.1, "dateTime":datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+        message_location = {"device_id":"639b588cfba69d57d680e6eb", "type" : "locations", "dateTime":datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") ,"longitude": 7.2525, "latitude": 80.591 }
+
+        myAWSIoTMQTTClient.publish(TOPIC, json.dumps(message_vital), 1) 
+        myAWSIoTMQTTClient.publish(TOPIC, json.dumps(message_location), 1) 
+        print("Published: '" + json.dumps(message_vital) + "' to the topic: " + "'/device1/'")
+        print("Published: '" + json.dumps(message_location) + "' to the topic: " + "'/device1/'")
+
+
+
 print('Begin Publish')
 #for i in range (1):
 
