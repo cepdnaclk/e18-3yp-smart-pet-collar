@@ -65,7 +65,7 @@ export default function AppDataRecords({
                     sx={{ color: "text.secondary" }}
                     noWrap
                   >
-                    {header.id === "dateTime"
+                    {header.id === "dateTime" || header.id === "startTime"
                       ? fDateTime(item[header.id])
                       : item[header.id]}
                   </Typography>

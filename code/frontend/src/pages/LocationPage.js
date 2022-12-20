@@ -76,7 +76,7 @@ export default function LocationPage() {
                     </a>
                   ),
                 }))
-                .sort((a, b) => b.dateTime - a.dateTime)}
+                .sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime))}
             />
           </Grid>
           <Grid item xs={12} sm={4} md={4}>

@@ -69,16 +69,16 @@ export default function HealthPage() {
               headersList={[
                 { id: "dateTime", label: "Recorded At" },
                 { id: "temperature", label: "Body Temperature" },
-                { id: "pulseRate", label: "Pulse Rate" },
+                { id: "heartRate", label: "Heart Rate" },
               ]}
               list={vitals
                 .map((vital) => ({
                   id: vital._id,
                   temperature: `${vital.temperature} °C`,
-                  pulseRate: `${vital.pulseRate} bpm`,
+                  heartRate: `${vital.heartRate} bpm`,
                   dateTime: vital.dateTime,
                 }))
-                .sort((a, b) => b.dateTime - a.dateTime)}
+                .sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime))}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
@@ -100,16 +100,16 @@ export default function HealthPage() {
             <AppDataRecords
               title="Sleep"
               headersList={[
-                { id: "dateTime", label: "Started Time" },
+                { id: "startTime", label: "Started Time" },
                 { id: "duration", label: "Duration" },
               ]}
               list={sleeps
                 .map((sleep) => ({
                   id: sleep._id,
                   duration: `${sleep.duration} min`,
-                  dateTime: sleep.dateTime,
+                  startTime: sleep.startTime,
                 }))
-                .sort((a, b) => b.dateTime - a.dateTime)}
+                .sort((a, b) => new Date(b.startTime) - new Date(a.startTime))}
             />
           </Grid>
           <Grid item xs={12} md={6} lg={6}>
