@@ -3,6 +3,7 @@ const { authenticateToken } = require("../auth/jwt");
 const Pet = require("../models/Pet");
 const User = require("../models/User");
 const Vaccination = require("../models/Vaccination");
+const { getDistanceFromLatLonInM } = require("../util/location_distance");
 
 // router is an instance of the express router.
 // We use it to define our routes.
@@ -32,11 +33,19 @@ router.get("/pet/overview", authenticateToken, (req, res) => {
         location = {
           latitude: 0,
           longitude: 0,
+          distance: 0,
         };
       } else {
         location = user.pet.locations.reduce((a, b) =>
           a.dateTime > b.dateTime ? a : b
         );
+        let distance = getDistanceFromLatLonInM(
+          user.latitude,
+          user.longitude,
+          location.latitude,
+          location.longitude
+        );
+        location = { ...location._doc, distance: distance };
       }
 
       if (user.pet.sleeps.length === 0) {
