@@ -14,8 +14,7 @@ const router = express.Router();
 // get pet's overview data (latest vital, latest location)
 router.get("/pet/overview", authenticateToken, (req, res) => {
   User.findById(req.user.user_id, function (err, user) {
-    if (err) {
-      console.log(err);
+    if (err || !user) {
       res.status(400).send("Error fetching user!");
     } else {
       let vital, location, sleep;
@@ -87,7 +86,7 @@ router.get("/pet/overview", authenticateToken, (req, res) => {
 // get pet's all vaccinations
 router.get("/pet/vaccinations", authenticateToken, (req, res) => {
   User.findById(req.user.user_id, function (err, user) {
-    if (err) {
+    if (err || !user) {
       console.log(err);
       res.status(400).send("Error fetching user!");
     } else {
@@ -104,7 +103,7 @@ router.get("/pet/vaccinations", authenticateToken, (req, res) => {
 // get pet's all sleep data
 router.get("/pet/sleeps", authenticateToken, (req, res) => {
   User.findById(req.user.user_id, function (err, user) {
-    if (err) {
+    if (err || !user) {
       console.log(err);
       res.status(400).send("Error fetching user!");
     } else {
@@ -116,7 +115,7 @@ router.get("/pet/sleeps", authenticateToken, (req, res) => {
 // get pet's vitals
 router.get("/pet/vitals", authenticateToken, (req, res) => {
   User.findById(req.user.user_id, function (err, user) {
-    if (err) {
+    if (err || !user) {
       console.log(err);
       res.status(400).send("Error fetching user!");
     } else {
@@ -128,7 +127,7 @@ router.get("/pet/vitals", authenticateToken, (req, res) => {
 // get pet's locations
 router.get("/pet/locations", authenticateToken, (req, res) => {
   User.findById(req.user.user_id, function (err, user) {
-    if (err) {
+    if (err || !user) {
       console.log(err);
       res.status(400).send("Error fetching user!");
     } else {
@@ -152,7 +151,7 @@ router.post("/pet/vaccinations", authenticateToken, (req, res) => {
       res.status(400).send("Error creating vaccination!");
     } else {
       User.findById(req.user.user_id, function (err, user) {
-        if (err) {
+        if (err || !user) {
           console.log(err);
           res.status(400).send("Error fetching user!");
         } else {
@@ -178,7 +177,7 @@ router.put("/pet/vaccinations/:id", authenticateToken, (req, res) => {
     },
     { new: true },
     function (err, vaccination) {
-      if (err) {
+      if (err || !vaccination) {
         console.log(err);
         res.status(400).send("Error updating vaccination!");
       } else {
@@ -198,7 +197,7 @@ router.put("/pet/vaccinations/:id/complete", authenticateToken, (req, res) => {
     },
     { new: true },
     function (err, vaccination) {
-      if (err) {
+      if (err || !vaccination) {
         console.log(err);
         res.status(400).send("Error updating vaccination!");
       } else {
@@ -211,9 +210,10 @@ router.put("/pet/vaccinations/:id/complete", authenticateToken, (req, res) => {
 // delete vaccination record
 router.delete("/pet/vaccinations/:id", authenticateToken, (req, res) => {
   User.findById(req.user.user_id, function (err, user) {
-    if (err) {
+    if (err || !user) {
       console.log(err);
       res.status(400).send("Error fetching user!");
+      return;
     } else {
       user.pet.vaccinations.pull(req.params.id);
       user.pet.save();
@@ -221,9 +221,10 @@ router.delete("/pet/vaccinations/:id", authenticateToken, (req, res) => {
   }).populate("pet", "vaccinations");
 
   Vaccination.findByIdAndDelete(req.params.id, function (err, vaccination) {
-    if (err) {
+    if (err || !vaccination) {
       console.log(err);
       res.status(400).send("Error deleting vaccination!");
+      return;
     } else {
       res.json(null);
     }
