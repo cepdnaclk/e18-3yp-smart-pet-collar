@@ -35,7 +35,7 @@ export default function AppMap({ title, subheader, location }) {
       <StyledChartWrapper dir="ltr">
         {!isLoading && (
           <iframe
-            src={`https://maps.google.com/maps&q=${location.longitude},${location.latitude}&hl=es&z=16&amp&output=embed`}
+            src={`https://maps.google.com/maps&KEY=${process.env.API_KEY}&q=${location.longitude},${location.latitude}&hl=es&z=16&amp&output=embed`}
             width="100%"
             height="350"
             title="Pet's Current Location"
