@@ -23,10 +23,7 @@ function run() {
     console.log(
       "---------------------------------------------------------------------------------"
     );
-
-    if(obj["type"] == "sync"){
-      device.publish("/device1/", JSON.stringify(obj));
-    }
+    device.publish("/device1/", JSON.stringify(obj));
   };
 
   // when connected to broker, subscribe to topic
