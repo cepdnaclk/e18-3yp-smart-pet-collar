@@ -152,17 +152,17 @@ export default function DashboardAppPage() {
               title="Recent Vitals"
               headersList={[
                 { id: "temperature", label: "Temperature" },
-                { id: "pulseRate", label: "Pulse Rate" },
+                { id: "heartRate", label: "Heart Rate" },
                 { id: "dateTime", label: "Date & Time" },
               ]}
               list={vitals
                 .map((vital) => ({
                   id: vital._id,
                   temperature: `${vital.temperature} °C`,
-                  pulseRate: `${vital.pulseRate} bpm`,
+                  heartRate: `${vital.heartRate} bpm`,
                   dateTime: vital.dateTime,
                 }))
-                .sort((a, b) => b.dateTime - a.dateTime)}
+                .sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime))}
             />
           </Grid>
         </Grid>

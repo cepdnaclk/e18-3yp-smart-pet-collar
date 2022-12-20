@@ -1,5 +1,7 @@
 // Dependencies
 const awsIot = require("aws-iot-device-sdk");
+const Device = require("./models/Device");
+const Pet = require("./models/Pet");
 //const sensor = require("node-dht-sensor");
 
 function run() {
@@ -16,25 +18,33 @@ function run() {
 
   // when connected to broker, subscribe to topic
   device.on("connect", function () {
-    device.subscribe('/device1/', function (err) {
+    device.subscribe("/device1/", function (err) {
       if (!err) {
-          console.log("MQTT Connected");
+        console.log("MQTT Connected");
       }
-    })
+    });
   });
 
   // Set handler for the device, it will get the messages from subscribers topics.
-device.on('message', function (topic, payload) {
-    console.log('message', topic, payload.toString());
-});
+  device.on("message", function (topic, payload) {
+    const data = JSON.parse(payload.toString());
 
-device.on('error', function (topic, payload) {
-    console.log('Error:', topic, payload.toString());
-});
+    if (data.type === "vitals") {
+      addVital(data);
+    } else if (data.type === "locations") {
+      addLocation(data);
+    } else if (data.type === "sleeps") {
+      addSleep(data);
+    }
+  });
+
+  device.on("error", function (topic, payload) {
+    console.log("Error:", topic, payload.toString());
+  });
 
   // when a new msg arrives on mqtt
   // mqttClient.on('message', function (topic, message) {
-    
+
   //   try {
   //       // MQTT msg  format
   //       // id,temp,humidity,rainSensor,lightSensor,airQualitySensor
@@ -63,7 +73,95 @@ device.on('error', function (topic, payload) {
   //   }
 
   // })
+}
 
+function addVital(data) {
+  Device.findById(data.device_id, (err, device) => {
+    if (err) {
+      console.log(err);
+    }
+    if (device) {
+      Pet.findByIdAndUpdate(
+        device.pet,
+        {
+          $push: {
+            vitals: {
+              dateTime: data.dateTime,
+              temperature: data.temperature,
+              heartRate: data.heartRate,
+            },
+          },
+        },
+        (err, pet) => {
+          if (err) {
+            console.log(err);
+          }
+          if (pet) {
+            console.log("Vitals added to pet");
+          }
+        }
+      );
+    }
+  });
+}
+
+function addLocation(data) {
+  Device.findById(data.device_id, (err, device) => {
+    if (err) {
+      console.log(err);
+    }
+    if (device) {
+      Pet.findByIdAndUpdate(
+        device.pet,
+        {
+          $push: {
+            locations: {
+              dateTime: data.dateTime,
+              latitude: data.latitude,
+              longitude: data.longitude,
+            },
+          },
+        },
+        (err, pet) => {
+          if (err) {
+            console.log(err);
+          }
+          if (pet) {
+            console.log("Location added to pet");
+          }
+        }
+      );
+    }
+  });
+}
+
+function addSleep(data) {
+  Device.findById(data.device_id, (err, device) => {
+    if (err) {
+      console.log(err);
+    }
+    if (device) {
+      Pet.findByIdAndUpdate(
+        device.pet,
+        {
+          $push: {
+            sleeps: {
+              startTime: data.startTime,
+              duration: data.duration,
+            },
+          },
+        },
+        (err, pet) => {
+          if (err) {
+            console.log(err);
+          }
+          if (pet) {
+            console.log("Sleep added to pet");
+          }
+        }
+      );
+    }
+  });
 }
 
 module.exports = { run };
