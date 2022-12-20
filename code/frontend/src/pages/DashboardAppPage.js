@@ -15,17 +15,41 @@ import {
   Thermostat,
 } from "@mui/icons-material";
 import AppMap from "src/sections/@dashboard/app/AppMap";
-import { faker } from "@faker-js/faker";
+import { useOutletContext } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
+  const user = useOutletContext();
+  const [vitals, setVitals] = useState([]);
+
+  useEffect(() => {
+    getVitals();
+    // eslint-disable-next-line
+  }, []);
+
+  const getVitals = () => {
+    axios
+      .get("http://43.205.113.198:3001/pet/vitals", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then((response) => {
+        setVitals(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <Helmet>
         <title> Dashboard | PetSmart </title>
       </Helmet>
-
       <Container maxWidth="xl">
         <Stack
           direction="row"
@@ -33,7 +57,7 @@ export default function DashboardAppPage() {
           justifyContent="space-between"
         >
           <Stack direction="column">
-            <Typography variant="h4">Hello, Noah</Typography>
+            <Typography variant="h4">Hello, {user.firstName}</Typography>
             <Typography
               variant="subtitle1"
               sx={{ mb: 5, color: "text.secondary" }}
@@ -128,23 +152,17 @@ export default function DashboardAppPage() {
               title="Recent Vitals"
               headersList={[
                 { id: "temperature", label: "Temperature" },
-                { id: "pulseRate", label: "Pulse Rate" },
+                { id: "heartRate", label: "Heart Rate" },
                 { id: "dateTime", label: "Date & Time" },
               ]}
-              list={[...Array(5)]
-                .map((_, index) => ({
-                  id: faker.datatype.uuid(),
-                  temperature: `${faker.datatype.number({
-                    min: 20,
-                    max: 40,
-                  })} °C`,
-                  pulseRate: `${faker.datatype.number({
-                    min: 60,
-                    max: 80,
-                  })} bpm`,
-                  dateTime: faker.date.recent(),
+              list={vitals
+                .map((vital) => ({
+                  id: vital._id,
+                  temperature: `${vital.temperature} °C`,
+                  heartRate: `${vital.heartRate} bpm`,
+                  dateTime: vital.dateTime,
                 }))
-                .sort((a, b) => b.dateTime - a.dateTime)}
+                .sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime))}
             />
           </Grid>
         </Grid>

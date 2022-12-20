@@ -128,6 +128,7 @@ router.post("/me/pet", authenticateToken, (req, res) => {
           }
         }
       );
+      // Todo add pet to device
     }
   });
 });

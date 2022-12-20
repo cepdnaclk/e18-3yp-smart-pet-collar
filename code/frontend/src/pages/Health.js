@@ -1,17 +1,56 @@
 import { Helmet } from "react-helmet-async";
 // @mui
 import { Stack, Container, Grid, Typography } from "@mui/material";
-import {
-  AppBarChart,
-  AppWidgetSummary,
-} from "src/sections/@dashboard/app";
-import { faker } from "@faker-js/faker";
+import { AppBarChart, AppWidgetSummary } from "src/sections/@dashboard/app";
 import { Favorite, Thermostat } from "@mui/icons-material";
 import AppDataRecords from "src/sections/@dashboard/app/AppDataRecords";
+import { useOutletContext } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 // ----------------------------------------------------------------------
 
 export default function HealthPage() {
+  const user = useOutletContext();
+  const [vitals, setVitals] = useState([]);
+  const [sleeps, setSleeps] = useState([]);
+
+  useEffect(() => {
+    getVitals();
+    getSleeps();
+    // eslint-disable-next-line
+  }, []);
+
+  const getVitals = () => {
+    axios
+      .get("http://43.205.113.198:3001/pet/vitals", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then((response) => {
+        setVitals(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const getSleeps = () => {
+    axios
+      .get("http://43.205.113.198:3001/pet/sleeps", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then((response) => {
+        setSleeps(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <Helmet>
@@ -30,22 +69,16 @@ export default function HealthPage() {
               headersList={[
                 { id: "dateTime", label: "Recorded At" },
                 { id: "temperature", label: "Body Temperature" },
-                { id: "pulseRate", label: "Pulse Rate" },
+                { id: "heartRate", label: "Heart Rate" },
               ]}
-              list={[...Array(20)]
-                .map((_, index) => ({
-                  id: faker.datatype.uuid(),
-                  temperature: `${faker.datatype.number({
-                    min: 20,
-                    max: 40,
-                  })} °C`,
-                  pulseRate: `${faker.datatype.number({
-                    min: 60,
-                    max: 80,
-                  })} bpm`,
-                  dateTime: faker.date.recent(),
+              list={vitals
+                .map((vital) => ({
+                  id: vital._id,
+                  temperature: `${vital.temperature} °C`,
+                  heartRate: `${vital.heartRate} bpm`,
+                  dateTime: vital.dateTime,
                 }))
-                .sort((a, b) => b.dateTime - a.dateTime)}
+                .sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime))}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
@@ -67,19 +100,16 @@ export default function HealthPage() {
             <AppDataRecords
               title="Sleep"
               headersList={[
-                { id: "dateTime", label: "Started Time" },
+                { id: "startTime", label: "Started Time" },
                 { id: "duration", label: "Duration" },
               ]}
-              list={[...Array(10)]
-                .map((_, index) => ({
-                  id: faker.datatype.uuid(),
-                  duration: `${faker.datatype.number({
-                    min: 20,
-                    max: 40,
-                  })} min`,
-                  dateTime: faker.date.recent(),
+              list={sleeps
+                .map((sleep) => ({
+                  id: sleep._id,
+                  duration: `${sleep.duration} min`,
+                  startTime: sleep.startTime,
                 }))
-                .sort((a, b) => b.dateTime - a.dateTime)}
+                .sort((a, b) => new Date(b.startTime) - new Date(a.startTime))}
             />
           </Grid>
           <Grid item xs={12} md={6} lg={6}>

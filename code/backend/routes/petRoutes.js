@@ -106,6 +106,7 @@ router.post("/pet/vaccinations", authenticateToken, (req, res) => {
   const newVaccination = {
     name: req.body.name,
     scheduledDate: req.body.scheduledDate,
+    label: req.body.label,
     status: "pending",
   };
 
@@ -138,6 +139,26 @@ router.put("/pet/vaccinations/:id", authenticateToken, (req, res) => {
       completedDate: req.body.completedDate,
       label: req.body.label,
       status: req.body.status,
+    },
+    { new: true },
+    function (err, vaccination) {
+      if (err) {
+        console.log(err);
+        res.status(400).send("Error updating vaccination!");
+      } else {
+        res.json(vaccination);
+      }
+    }
+  );
+});
+
+// mark vaccination record as completed
+router.put("/pet/vaccinations/:id/complete", authenticateToken, (req, res) => {
+  Vaccination.findByIdAndUpdate(
+    req.params.id,
+    {
+      completedDate: new Date(),
+      status: "completed",
     },
     { new: true },
     function (err, vaccination) {

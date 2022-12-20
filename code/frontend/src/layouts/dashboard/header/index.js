@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar, IconButton, Menu } from '@mui/material';
+import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
 // utils
 import { bgBlur } from '../../../utils/cssStyles';
 //
 import AccountPopover from './AccountPopover';
 import NotificationsPopover from './NotificationsPopover';
+import { Menu } from '@mui/icons-material';
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +39,7 @@ Header.propTypes = {
   onOpenNav: PropTypes.func,
 };
 
-export default function Header({ onOpenNav }) {
+export default function Header({ onOpenNav, user }) {
   return (
     <StyledRoot>
       <StyledToolbar>
@@ -64,7 +65,7 @@ export default function Header({ onOpenNav }) {
           }}
         >
           <NotificationsPopover />
-          <AccountPopover />
+          <AccountPopover user={user} />
         </Stack>
       </StyledToolbar>
     </StyledRoot>

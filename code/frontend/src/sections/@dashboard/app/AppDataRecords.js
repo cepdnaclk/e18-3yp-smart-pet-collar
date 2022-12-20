@@ -59,13 +59,13 @@ export default function AppDataRecords({
               divider={<Divider orientation="vertical" flexItem />}
             >
               {headersList.map((header) => (
-                <Box sx={{ minWidth: 240 }}>
+                <Box sx={{ minWidth: 240 }} key={header.id} >
                   <Typography
                     variant="body2"
                     sx={{ color: "text.secondary" }}
                     noWrap
                   >
-                    {header.id === "dateTime"
+                    {header.id === "dateTime" || header.id === "startTime"
                       ? fDateTime(item[header.id])
                       : item[header.id]}
                   </Typography>

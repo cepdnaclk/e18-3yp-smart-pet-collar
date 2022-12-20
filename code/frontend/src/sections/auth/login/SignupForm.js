@@ -24,7 +24,7 @@ export default function SignupForm() {
     let pin = document.getElementById("pin").value;
 
     try {
-      const result = await axios.post("http://localhost:3001/signup", {
+      const result = await axios.post("http://43.205.113.198:3001/signup", {
         firstName: firstName,
         lastName: lastName,
         email: email,
@@ -34,10 +34,7 @@ export default function SignupForm() {
       });
 
       if (result.status === 201) {
-        login({
-          email: email,
-          password: password,
-        });
+        login(result.data);
         navigate("/dashboard", { replace: true });
       } else {
         console.log("Something went wrong");
