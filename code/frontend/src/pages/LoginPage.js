@@ -22,7 +22,7 @@ const StyledRoot = styled("div")(({ theme }) => ({
 
 const StyledSection = styled("div")(({ theme }) => ({
   width: "100%",
-  maxWidth: 480,
+  maxWidth: 580,
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -31,7 +31,7 @@ const StyledSection = styled("div")(({ theme }) => ({
 }));
 
 const StyledContent = styled("div")(({ theme }) => ({
-  maxWidth: 480,
+  maxWidth: 580,
   margin: "auto",
   minHeight: "100vh",
   display: "flex",

@@ -3,6 +3,7 @@ import time as t
 import json
 import AWSIoTPythonSDK.MQTTLib as AWSIoTPyMQTT
 import datetime
+import random
 
 # Define ENDPOINT, CLIENT_ID, PATH_TO_CERTIFICATE, PATH_TO_PRIVATE_KEY, PATH_TO_AMAZON_ROOT_CA_1, MESSAGE, TOPIC, and RANGE
 ENDPOINT = "a26wj855ybmd1h-ats.iot.ap-south-1.amazonaws.com"
@@ -21,9 +22,14 @@ myAWSIoTMQTTClient.configureCredentials(
 
 myAWSIoTMQTTClient.connect()
 
+
 def sendData():
-    message_vital = {"device_id": "639b588cfba69d57d680e6ee", "type": "vitals", "temperature": 10.1, "heartRate": 100.1, "dateTime": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
-    message_location = {"device_id": "639b588cfba69d57d680e6eb", "type": "locations", "dateTime": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "longitude": 7.2525, "latitude": 80.591}
+    temperature = round(random.uniform(20, 40), 2)
+    heartRate = round(random.uniform(60, 100), 2)
+    message_vital = {"device_id": "639b588cfba69d57d680e6ee", "type": "vitals", "temperature": temperature,
+                     "heartRate": heartRate, "dateTime": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+    message_location = {"device_id": "639b588cfba69d57d680e6eb", "type": "locations", "dateTime": datetime.datetime.now(
+    ).strftime("%Y-%m-%d %H:%M:%S"), "longitude": 7.2525, "latitude": 80.591}
 
     myAWSIoTMQTTClient.publishAsync(TOPIC, json.dumps(message_vital), 1)
     myAWSIoTMQTTClient.publishAsync(TOPIC, json.dumps(message_location), 1)
