@@ -25,7 +25,7 @@ export default function LoginForm() {
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
     try {
-      const result = await axios.post("http://localhost:3001/login", {
+      const result = await axios.post("http://43.205.113.198:3001/login", {
         email: email,
         password: password,
       });

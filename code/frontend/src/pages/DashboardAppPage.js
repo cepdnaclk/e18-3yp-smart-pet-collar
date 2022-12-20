@@ -32,7 +32,7 @@ export default function DashboardAppPage() {
 
   const getVitals = () => {
     axios
-      .get("http://localhost:3001/pet/vitals", {
+      .get("http://43.205.113.198:3001/pet/vitals", {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

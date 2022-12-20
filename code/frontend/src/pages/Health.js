@@ -23,7 +23,7 @@ export default function HealthPage() {
 
   const getVitals = () => {
     axios
-      .get("http://localhost:3001/pet/vitals", {
+      .get("http://43.205.113.198:3001/pet/vitals", {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -38,7 +38,7 @@ export default function HealthPage() {
 
   const getSleeps = () => {
     axios
-      .get("http://localhost:3001/pet/sleeps", {
+      .get("http://43.205.113.198:3001/pet/sleeps", {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
