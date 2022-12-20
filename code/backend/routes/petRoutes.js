@@ -152,6 +152,26 @@ router.put("/pet/vaccinations/:id", authenticateToken, (req, res) => {
   );
 });
 
+// mark vaccination record as completed
+router.put("/pet/vaccinations/:id/complete", authenticateToken, (req, res) => {
+  Vaccination.findByIdAndUpdate(
+    req.params.id,
+    {
+      completedDate: new Date(),
+      status: "completed",
+    },
+    { new: true },
+    function (err, vaccination) {
+      if (err) {
+        console.log(err);
+        res.status(400).send("Error updating vaccination!");
+      } else {
+        res.json(vaccination);
+      }
+    }
+  );
+});
+
 // delete vaccination record
 router.delete("/pet/vaccinations/:id", authenticateToken, (req, res) => {
   User.findById(req.user.user_id, function (err, user) {
