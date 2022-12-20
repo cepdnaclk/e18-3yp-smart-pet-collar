@@ -9,6 +9,8 @@ import Logo from "../components/logo";
 // sections
 import { LoginForm, SignupForm } from "../sections/auth/login";
 import { useState } from "react";
+import { useAuth } from "src/hooks/useAuth";
+import { Navigate } from "react-router-dom";
 
 // ----------------------------------------------------------------------
 
@@ -43,6 +45,12 @@ const StyledContent = styled("div")(({ theme }) => ({
 export default function LoginPage() {
   const mdUp = useResponsive("up", "md");
   const [isSignup, setIsSignup] = useState(false);
+
+  const { user } = useAuth();
+
+  if (user) {
+    return <Navigate to="/dashboard" />;
+  }
 
   return (
     <>
