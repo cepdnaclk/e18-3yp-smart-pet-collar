@@ -1,7 +1,9 @@
 const express = require("express");
+const awsIot = require('./awsIot');
 const { mongoose } = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
+
 
 const port = 3001;
 const app = express();
@@ -18,6 +20,7 @@ app.use(require("./routes/petRoutes"));
 
 // Start server
 app.listen(port, async () => {
+  
   const mongoDB = process.env.MONGODB_URI;
   mongoose.set("strictQuery", true);
   await mongoose
@@ -27,6 +30,7 @@ app.listen(port, async () => {
     })
     .then(() => {
       console.log("Connected to MongoDB");
+      awsIot.run();
     })
     .catch((err) => {
       console.log(err);
