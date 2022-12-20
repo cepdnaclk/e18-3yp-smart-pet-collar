@@ -117,7 +117,7 @@ export default function VaccinationPage() {
 
   const getVaccinations = () => {
     axios
-      .get("http://localhost:3001/pet/vaccinations", {
+      .get("http://43.205.113.198:3001/pet/vaccinations", {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -139,7 +139,7 @@ export default function VaccinationPage() {
       status: "scheduled",
     };
     axios
-      .post("http://localhost:3001/pet/vaccinations", vaccination, {
+      .post("http://43.205.113.198:3001/pet/vaccinations", vaccination, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -155,7 +155,7 @@ export default function VaccinationPage() {
 
   const handleDelete = async () => {
     axios
-      .delete(`http://localhost:3001/pet/vaccinations/${deleteId}`, {
+      .delete(`http://43.205.113.198:3001/pet/vaccinations/${deleteId}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

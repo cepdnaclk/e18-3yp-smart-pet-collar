@@ -21,7 +21,7 @@ export default function LocationPage() {
 
   const getLocations = () => {
     axios
-      .get("http://localhost:3001/pet/locations", {
+      .get("http://43.205.113.198:3001/pet/locations", {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

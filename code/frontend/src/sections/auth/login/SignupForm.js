@@ -24,7 +24,7 @@ export default function SignupForm() {
     let pin = document.getElementById("pin").value;
 
     try {
-      const result = await axios.post("http://localhost:3001/signup", {
+      const result = await axios.post("http://43.205.113.198:3001/signup", {
         firstName: firstName,
         lastName: lastName,
         email: email,
