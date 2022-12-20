@@ -37,13 +37,13 @@ export default function SignupForm() {
         login(result.data);
         navigate("/dashboard", { replace: true });
       } else {
-        console.log("Something went wrong");
+        alert("Something went wrong");
       }
     } catch (error) {
       if (error.response.status === 400) {
-        console.log(error.response.data);
+        alert(error.response.data);
       } else {
-        console.log("Something went wrong");
+        alert("Something went wrong");
       }
     }
   };

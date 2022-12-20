@@ -34,13 +34,13 @@ export default function LoginForm() {
         login(result.data);
         navigate("/dashboard", { replace: true });
       } else {
-        console.log("Something went wrong");
+        alert("Something went wrong");
       }
     } catch (error) {
       if (error.response.status === 400) {
-        console.log("Invalid credentials");
+        alert("Invalid credentials");
       } else {
-        console.log("Something went wrong");
+        alert("Something went wrong");
       }
     }
   };
