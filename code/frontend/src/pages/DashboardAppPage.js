@@ -24,9 +24,11 @@ import axios from "axios";
 export default function DashboardAppPage() {
   const user = useOutletContext();
   const [vitals, setVitals] = useState([]);
+  const [overview, setOverview] = useState(null);
 
   useEffect(() => {
     getVitals();
+    getOverview();
     // eslint-disable-next-line
   }, []);
 
@@ -44,6 +46,21 @@ export default function DashboardAppPage() {
         console.log(error);
       });
   };
+
+  const getOverview = () => {
+    axios
+      .get("http://43.205.113.198:3001/pet/overview", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then((response) => {
+        setOverview(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   return (
     <>
@@ -74,15 +91,15 @@ export default function DashboardAppPage() {
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
               title="Temperature"
-              value="30 C"
+              value={overview?.vital.temperature + " ℃"}
               icon={<Thermostat />}
             />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
-              title="Pulse Rate"
-              value="70 bpm"
+              title="Heart Rate"
+              value={overview?.vital.heartRate + " bpm"}
               color="info"
               icon={<MonitorHeart />}
             />
@@ -91,7 +108,7 @@ export default function DashboardAppPage() {
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
               title="Sleep Status"
-              value="3 Hours"
+              value={overview?.sleep.duration + " min"}
               color="warning"
               icon={<Bedtime />}
             />

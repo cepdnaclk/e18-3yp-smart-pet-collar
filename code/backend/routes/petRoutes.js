@@ -16,7 +16,7 @@ router.get("/pet/overview", authenticateToken, (req, res) => {
       console.log(err);
       res.status(400).send("Error fetching user!");
     } else {
-      let vital, location;
+      let vital, location, sleep;
       if (user.pet.vitals.length === 0) {
         vital = {
           heartRate: 0,
@@ -39,9 +39,35 @@ router.get("/pet/overview", authenticateToken, (req, res) => {
         );
       }
 
+      if (user.pet.sleeps.length === 0) {
+        sleep = {
+          duration: 0,
+        };
+      } else {
+        let sleeps = user.pet.sleeps.filter((sleep) => {
+          let sleepDate = new Date(sleep.startTime);
+          let today = new Date();
+          return (
+            sleepDate.getDate() === today.getDate() &&
+            sleepDate.getMonth() === today.getMonth() &&
+            sleepDate.getFullYear() === today.getFullYear()
+          );
+        });
+
+        sleep = sleeps.reduce(
+          (a, b) => {
+            return {
+              duration: a.duration + b.duration,
+            };
+          },
+          { duration: 0 }
+        );
+      }
+
       const overview = {
         location: location,
         vital: vital,
+        sleep: sleep,
       };
       res.json(overview);
     }
