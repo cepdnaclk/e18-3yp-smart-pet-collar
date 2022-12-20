@@ -39,7 +39,7 @@ import { useOutletContext } from "react-router-dom";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { Delete, Edit, MoreVert } from "@mui/icons-material";
+import { Delete, Done, MoreVert } from "@mui/icons-material";
 
 // ----------------------------------------------------------------------
 
@@ -107,7 +107,7 @@ export default function VaccinationPage() {
 
   const [scheduledDate, setScheduledDate] = useState(null);
 
-  const [deleteId, setDeleteId] = useState(null);
+  const [selectedItemId, setSelectedItemId] = useState(null);
 
   // get all vaccinations through axios
   useEffect(() => {
@@ -155,7 +155,7 @@ export default function VaccinationPage() {
 
   const handleDelete = async () => {
     axios
-      .delete(`http://43.205.113.198:3001/pet/vaccinations/${deleteId}`, {
+      .delete(`http://43.205.113.198:3001/pet/vaccinations/${selectedItemId}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -171,13 +171,35 @@ export default function VaccinationPage() {
     handleCloseMenu();
   };
 
+  const handleComplete = async () => {
+    axios
+      .put(
+        `http://43.205.113.198:3001/pet/vaccinations/${selectedItemId}/complete`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Successfully marked as completed");
+        getVaccinations();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    handleCloseMenu();
+  };
+
   const handleOpenMenu = (event, _id) => {
-    setDeleteId(_id);
+    setSelectedItemId(_id);
     setOpen(event.currentTarget);
   };
 
   const handleCloseMenu = () => {
-    setDeleteId(null);
+    setSelectedItemId(null);
     setOpen(null);
   };
 
@@ -476,9 +498,9 @@ export default function VaccinationPage() {
           },
         }}
       >
-        <MenuItem>
-          <Edit />
-          Edit
+        <MenuItem onClick={handleComplete}>
+          <Done />
+          Mark as Completed
         </MenuItem>
 
         <MenuItem sx={{ color: "error.main" }} onClick={handleDelete}>
