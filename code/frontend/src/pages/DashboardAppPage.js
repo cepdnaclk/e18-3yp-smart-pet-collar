@@ -60,7 +60,7 @@ export default function DashboardAppPage() {
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
   return (
     <>
@@ -117,7 +117,7 @@ export default function DashboardAppPage() {
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
               title="Distance from Home"
-              value="50 m"
+              value={overview?.location.distance + " m"}
               color="error"
               icon={<Straighten />}
             />
