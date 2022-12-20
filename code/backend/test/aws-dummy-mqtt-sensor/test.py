@@ -18,24 +18,32 @@ myAWSIoTMQTTClient = AWSIoTPyMQTT.AWSIoTMQTTClient(CLIENT_ID)
 myAWSIoTMQTTClient.configureEndpoint(ENDPOINT, 8883)
 myAWSIoTMQTTClient.configureCredentials(PATH_TO_AMAZON_ROOT_CA_1, PATH_TO_PRIVATE_KEY, PATH_TO_CERTIFICATE)
 
+def sync_but(self, params, packet):
+	print(packet.payload)
+
+
 myAWSIoTMQTTClient.connect()
 print('Begin Publish')
-for i in range (1):
-    #data = "{} [{}]".format(MESSAGE, i+1)
+#for i in range (1):
+
+while(True):
     
-    message_vital = {"device_id":"639b588cfba69d57d680e6eb", "type" : "vitals", "temperature":20.1, "heartRate":100.1, "dateTime":datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+    # message_vital = {"device_id":"639b588cfba69d57d680e6eb", "type" : "vitals", "temperature":20.1, "heartRate":100.1, "dateTime":datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 
-    message_location = {"device_id":"639b588cfba69d57d680e6eb", "type" : "locations", "dateTime":datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") ,"longitude": 7.2525, "latitude": 80.591 }
+    # message_location = {"device_id":"639b588cfba69d57d680e6eb", "type" : "locations", "dateTime":datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") ,"longitude": 7.2525, "latitude": 80.591 }
 
-    message_sleep = {"device_id":"639b588cfba69d57d680e6eb", "type" : "sleeps", "startTime":datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") ,"duration": 100}
+    # message_sleep = {"device_id":"639b588cfba69d57d680e6eb", "type" : "sleeps", "startTime":datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") ,"duration": 100}
 
-    myAWSIoTMQTTClient.publish(TOPIC, json.dumps(message_vital), 1) 
-    myAWSIoTMQTTClient.publish(TOPIC, json.dumps(message_location), 1) 
-    myAWSIoTMQTTClient.publish(TOPIC, json.dumps(message_sleep), 1) 
+    # myAWSIoTMQTTClient.publish(TOPIC, json.dumps(message_vital), 1) 
+    # myAWSIoTMQTTClient.publish(TOPIC, json.dumps(message_location), 1) 
+    # myAWSIoTMQTTClient.publish(TOPIC, json.dumps(message_sleep), 1) 
 
-    print("Published: '" + json.dumps(message_vital) + "' to the topic: " + "'/device1/'")
-    print("Published: '" + json.dumps(message_location) + "' to the topic: " + "'/device1/'")
-    print("Published: '" + json.dumps(message_sleep) + "' to the topic: " + "'/device1/'")
+    # print("Published: '" + json.dumps(message_vital) + "' to the topic: " + "'/device1/'")
+    # print("Published: '" + json.dumps(message_location) + "' to the topic: " + "'/device1/'")
+    # print("Published: '" + json.dumps(message_sleep) + "' to the topic: " + "'/device1/'")
+
+    # subscribe the corresponding channel
+    myAWSIoTMQTTClient.subscribe("/device1/", 1, sync_but)
 
     t.sleep(2)
 
