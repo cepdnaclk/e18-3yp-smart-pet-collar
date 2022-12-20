@@ -34,7 +34,7 @@ export default function DashboardAppPage() {
 
   const getVitals = () => {
     axios
-      .get("http://43.205.113.198:3001/pet/vitals", {
+      .get("http://localhost:3001/pet/vitals", {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -49,13 +49,33 @@ export default function DashboardAppPage() {
 
   const getOverview = () => {
     axios
-      .get("http://43.205.113.198:3001/pet/overview", {
+      .get("http://localhost:3001/pet/overview", {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
       })
       .then((response) => {
         setOverview(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleSync = () => {
+    axios
+      .post(
+        "http://localhost:3001/pet/sync",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        getVitals();
+        getOverview();
       })
       .catch((error) => {
         console.log(error);
@@ -82,7 +102,7 @@ export default function DashboardAppPage() {
               Welcome to PetSmart Dashboard!
             </Typography>
           </Stack>
-          <Button variant="contained" startIcon={<Sync />}>
+          <Button variant="contained" startIcon={<Sync />} onClick={handleSync}>
             Sync now
           </Button>
         </Stack>

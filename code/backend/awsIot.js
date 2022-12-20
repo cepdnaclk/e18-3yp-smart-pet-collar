@@ -4,8 +4,9 @@ const Device = require("./models/Device");
 const Pet = require("./models/Pet");
 //const sensor = require("node-dht-sensor");
 
+let device;
 function run() {
-  const device = awsIot.device({
+  device = awsIot.device({
     clientId: "mqtt-explorer-839a6474",
     host: "a26wj855ybmd1h-ats.iot.ap-south-1.amazonaws.com",
     port: 8883,
@@ -16,16 +17,6 @@ function run() {
     caPath: "./cert/AmazonRootCA1.pem",
   });
 
-  // the function for the sync button 
-  const sendData = () => {
-    const obj = { type: "sync" };
-    console.log("STEP - Requesting data from AWS  IoT Core");
-    console.log(
-      "---------------------------------------------------------------------------------"
-    );
-    device.publish("/device1/", JSON.stringify(obj));
-  };
-
   // when connected to broker, subscribe to topic
   device.on("connect", function () {
     device.subscribe("/device1/", function (err) {
@@ -33,7 +24,6 @@ function run() {
         console.log("MQTT Connected");
       }
     });
-    sendData();
   });
 
   // Set handler for the device, it will get the messages from subscribers topics.
@@ -143,4 +133,10 @@ function addSleep(data) {
   });
 }
 
-module.exports = { run };
+function sendData() {
+  const obj = { type: "sync" };
+  console.log("STEP - Requesting data from AWS  IoT Core");
+  device.publish("/device1/", JSON.stringify(obj));
+}
+
+module.exports = { run, sendData };

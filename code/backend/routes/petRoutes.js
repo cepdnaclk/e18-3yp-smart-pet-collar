@@ -1,5 +1,6 @@
 const express = require("express");
 const { authenticateToken } = require("../auth/jwt");
+const { sendData } = require("../awsIot");
 const Pet = require("../models/Pet");
 const User = require("../models/User");
 const Vaccination = require("../models/Vaccination");
@@ -227,6 +228,12 @@ router.delete("/pet/vaccinations/:id", authenticateToken, (req, res) => {
       res.json(null);
     }
   });
+});
+
+// sync pet's data (sends a request to device to sync data)
+router.post("/pet/sync", authenticateToken, (req, res) => {
+  sendData();
+  res.status(200).json(null);
 });
 
 module.exports = router;
