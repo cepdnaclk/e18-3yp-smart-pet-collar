@@ -26,7 +26,7 @@ myAWSIoTMQTTClient.connect()
 def sendData():
     temperature = round(random.uniform(20, 40), 2)
     heartRate = round(random.uniform(60, 100), 2)
-    message_vital = {"device_id": "639b588cfba69d57d680e6ee", "type": "vitals", "temperature": temperature,
+    message_vital = {"device_id": "639b588cfba69d57d680e6eb", "type": "vitals", "temperature": temperature,
                      "heartRate": heartRate, "dateTime": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
     message_location = {"device_id": "639b588cfba69d57d680e6eb", "type": "locations", "dateTime": datetime.datetime.now(
     ).strftime("%Y-%m-%d %H:%M:%S"), "longitude": 7.2525, "latitude": 80.591}
