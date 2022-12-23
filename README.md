@@ -73,7 +73,7 @@ What if the device lost network connectivity at some point? To address that issu
 
 <img width="461" alt="" src="https://raw.githubusercontent.com/cepdnaclk/e18-3yp-smart-pet-collar/main/docs/assets/img/3d_module/3d_design.jpeg">
 
-We proposed a solution that is a smart pet belt. It is a wearable and waterproof device. Therefore, you need to wear it in your pet and connect it with your pc or mobile phone. Simply, you can get corresponding details very easily.
+This is the 3D design of the smart pet collar. The collar should not be too heavy on the pet's neck. As a result, we designed it in this manner. Here, you can see the rechargable battery on the top of the collar. And also, the main circuit board and speaker are also on the top of the collar. You can see two sensors inside the collar, which are a temperature sensor and a pulse sensor. The gyroscope sensor is on the main circuit board. Our product features are,
 
 - Track your pet
 - Analyze your pet’s sleep
