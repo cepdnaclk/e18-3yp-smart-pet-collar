@@ -10,6 +10,7 @@ import HealthPage from "./pages/Health";
 import TrainingPage from "./pages/TrainingPage";
 import VaccinationPage from "./pages/VaccinationPage";
 import LocationPage from "./pages/LocationPage";
+import SettingsPage from "./pages/SettingsPage";
 
 // ----------------------------------------------------------------------
 
@@ -25,6 +26,7 @@ export default function Router() {
         { path: "vaccination", element: <VaccinationPage /> },
         { path: "training", element: <TrainingPage /> },
         { path: "location", element: <LocationPage /> },
+        { path: "settings", element: <SettingsPage /> },
       ],
     },
     {
