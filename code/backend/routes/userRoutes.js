@@ -133,4 +133,53 @@ router.post("/me/pet", authenticateToken, (req, res) => {
   });
 });
 
+// get user's pet
+router.get("/me/pet", authenticateToken, (req, res) => {
+  User.findById(req.user.user_id, function (err, user) {
+    if (err || !user) {
+      res.status(400).send("Error fetching user!");
+    } else {
+      Pet.findById(user.pet, function (err, pet) {
+        if (err || !pet) {
+          res.status(400).send("Error fetching pet!");
+        } else {
+          res.json(pet);
+        }
+      });
+    }
+  });
+});
+
+// edit user's pet
+router.put("/me/pet", authenticateToken, (req, res) => {
+  User.findById(req.user.user_id, function (err, user) {
+    if (err || !user) {
+      res.status(400).send("Error fetching user!");
+    } else {
+      Pet.findByIdAndUpdate(
+        user.pet,
+        {
+          name: req.body.name,
+          sex: req.body.sex,
+          breed: req.body.breed,
+          dateOfBirth: req.body.dateOfBirth,
+          weight: req.body.weight,
+          color: req.body.color,
+          species: req.body.species,
+          specialCharacteristics: req.body.specialCharacteristics,
+        },
+        { new: true },
+        function (err, pet) {
+          if (err) {
+            console.log(err);
+            res.status(400).send("Error updating pet!");
+          } else {
+            res.json(pet);
+          }
+        }
+      );
+    }
+  });
+});
+
 module.exports = router;
