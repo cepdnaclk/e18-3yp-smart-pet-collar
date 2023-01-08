@@ -42,6 +42,8 @@ export default function AccountPopover({ user }) {
     const id = evt.currentTarget.id;
     if (id === "Home") {
       navigate("/dashboard", { replace: true });
+    } else if (id === "Settings") {
+      navigate("/dashboard/settings", { replace: true });
     }
     setOpen(null);
   };

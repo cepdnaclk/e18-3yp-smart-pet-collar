@@ -36,7 +36,7 @@ const Main = styled("div")(({ theme }) => ({
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
 
-  const { user } = useAuth();
+  const { user, updateUserDetails } = useAuth();
 
   if (!user) {
     return <Navigate to="/login" />;
@@ -49,7 +49,7 @@ export default function DashboardLayout() {
       <Nav openNav={open} onCloseNav={() => setOpen(false)} />
 
       <Main>
-        <Outlet context={user} />
+        <Outlet context={{ user, updateUserDetails }} />
       </Main>
     </StyledRoot>
   );

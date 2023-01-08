@@ -88,7 +88,7 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function VaccinationPage() {
-  const user = useOutletContext();
+  const { user } = useOutletContext();
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);

@@ -11,7 +11,7 @@ import axios from "axios";
 // ----------------------------------------------------------------------
 
 export default function HealthPage() {
-  const user = useOutletContext();
+  const { user } = useOutletContext();
   const [vitals, setVitals] = useState([]);
   const [sleeps, setSleeps] = useState([]);
 

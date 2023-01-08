@@ -21,7 +21,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // ----------------------------------------------------------------------
 
 export default function SettingsPage() {
-  const user = useOutletContext();
+  const { user, updateUserDetails } = useOutletContext();
 
   const [dateOfBirth, setDateOfBirth] = useState(null);
   const [pet, setPet] = useState(null);
@@ -53,7 +53,7 @@ export default function SettingsPage() {
       });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmitPet = async () => {
     const pet = {
       name: document.getElementById("name").value,
       sex: "Male",
@@ -73,7 +73,29 @@ export default function SettingsPage() {
       })
       .then((response) => {
         console.log("Successfully updated");
-        getPet();
+        setPet(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleSubmitUser = async () => {
+    const updatedUser = {
+      firstName: document.getElementById("firstName").value,
+      lastName: document.getElementById("lastName").value,
+      phone: document.getElementById("phone").value,
+    };
+
+    axios
+      .put("http://43.205.113.198:3001/me/", updatedUser, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then((response) => {
+        console.log("Successfully updated");
+        updateUserDetails(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -90,10 +112,56 @@ export default function SettingsPage() {
         <Typography variant="h4" marginBottom={5}>
           Settings
         </Typography>
-        {pet && (
-          <Grid container spacing={3}>
+        <Grid container spacing={3}>
+          {user && (
             <Grid item xs={12} md={6} lg={9}>
-              <Card id="add_form">
+              <Card id="user_form">
+                <CardHeader
+                  title="User Information"
+                  subheader="Add the basic information of you here."
+                />
+                <Stack spacing={3} padding={3}>
+                  <TextField
+                    name="firstName"
+                    id="firstName"
+                    label="First Name"
+                    defaultValue={user.firstName}
+                  />
+                  <TextField
+                    name="lastName"
+                    id="lastName"
+                    label="Last Name"
+                    defaultValue={user.lastName}
+                  />
+                  <TextField
+                    name="email"
+                    id="email"
+                    label="Email"
+                    defaultValue={user.email}
+                    disabled
+                  />
+                  <TextField
+                    name="phone"
+                    id="phone"
+                    label="Phone"
+                    defaultValue={user.phone}
+                  />
+
+                  <Button
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                    onClick={handleSubmitUser}
+                  >
+                    Submit
+                  </Button>
+                </Stack>
+              </Card>
+            </Grid>
+          )}
+          {pet && (
+            <Grid item xs={12} md={6} lg={9}>
+              <Card id="pet_form">
                 <CardHeader
                   title="Pet Information"
                   subheader="Add the basic information of your pet here."
@@ -146,15 +214,15 @@ export default function SettingsPage() {
                     size="large"
                     type="submit"
                     variant="contained"
-                    onClick={handleSubmit}
+                    onClick={handleSubmitPet}
                   >
                     Submit
                   </Button>
                 </Stack>
               </Card>
             </Grid>
-          </Grid>
-        )}
+          )}
+        </Grid>
       </Container>
     </>
   );
