@@ -70,6 +70,29 @@ router.post("/login", (req, res) => {
   });
 });
 
+// update user details
+router.put("/me", authenticateToken, (req, res) => {
+  User.findByIdAndUpdate(
+    req.user.user_id,
+    {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      phone: req.body.phone,
+      longitude: req.body.longitude,
+      latitude: req.body.latitude,
+    },
+    { new: true },
+    function (err, user) {
+      if (err) {
+        console.log(err);
+        res.status(400).send("Error updating user!");
+      } else {
+        res.json(user);
+      }
+    }
+  );
+});
+
 // register a device under a user
 router.post("/me/device", authenticateToken, (req, res) => {
   Device.findById(req.body.deviceId, function (err, device) {
