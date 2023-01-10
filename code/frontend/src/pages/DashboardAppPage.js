@@ -22,7 +22,7 @@ import axios from "axios";
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
-  const user = useOutletContext();
+  const { user } = useOutletContext();
   const [vitals, setVitals] = useState([]);
   const [overview, setOverview] = useState(null);
 

@@ -11,7 +11,7 @@ import axios from "axios";
 // ----------------------------------------------------------------------
 
 export default function LocationPage() {
-  const user = useOutletContext();
+  const { user } = useOutletContext();
   const [locations, setLocations] = useState([]);
 
   useEffect(() => {
