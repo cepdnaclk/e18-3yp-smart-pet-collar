@@ -62,13 +62,6 @@
           <li><a href="#why-us">About</a></li>
           <li><a href="#architecture">Architecture</a></li>
           <li><a href="#3d_module">3D-Design</a></li>
-          <li class="dropdown"><a href="#"><span>Data Flow</span> <i
-                class="bi bi-chevron-down dropdown-indicator"></i></a>
-            <ul>
-              <li><a href="#">Generation of Data</a></li>
-              <li><a href="#">Flow of Data</a></li>
-            </ul>
-          </li>
           <li class="dropdown"><a href="#"><span>Software</span> <i
                 class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
@@ -76,6 +69,7 @@
               <li><a href="#backend">Backend</a></li>
             </ul>
           </li>
+          <li><a href="#hardware">Hardware</a></li>
           <li class="dropdown"><a href="#"><span>Other</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               <li><a href="#testing">Testing Plan</a></li>
@@ -269,20 +263,23 @@
         <div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
           <div class="row g-0">
             <div class="col-md-6" style="background-color: rgba(255,255,255)">
-			<video width="100%" height="100%" controls>
-				<source src="assets\img\3d_module\Assem1.mp4" type="video/mp4" />
-				Your browser does not support the video tag.
-			</video>
+              <video width="100%" height="100%" controls>
+                <source src="assets\img\3d_module\Assem1.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
 
             </div>
             <div class="col-md-6">
               <div class="card-body">
                 <h3 class="card-title">3D design </h3>
                 <p class="card-text">
-                  This is the 3D design of the smart pet collar. The collar should not be too heavy on the pet's neck. 
-				  As a result, we designed it in this manner. Here, you can see the rechargable battery on the top of the collar. 
-				  And also, the main circuit board and speaker are also on the top of the collar. You can see two sensors inside the collar, 
-				  which are a temperature sensor and a pulse sensor. The gyroscope sensor is on the main circuit board. Our product features are,
+                  This is the 3D design of the smart pet collar. The collar should not be too heavy on the pet's neck.
+                  As a result, we designed it in this manner. Here, you can see the rechargable battery on the top of
+                  the collar.
+                  And also, the main circuit board and speaker are also on the top of the collar. You can see two
+                  sensors inside the collar,
+                  which are a temperature sensor and a pulse sensor. The gyroscope sensor is on the main circuit board.
+                  Our product features are,
                 </p>
                 <p class="card-text">
                 <ul>
@@ -303,7 +300,7 @@
         </div>
 
       </div>
-    </section> -->
+    </section>
     <!-- End Call the 3D design Section -->
 
 
@@ -371,7 +368,7 @@
 
 
       </div>
-    </section> -->
+    </section> 
     <!-- End Call the Frontend Section -->
 
 
@@ -444,8 +441,84 @@
 
 
       </div>
-    </section> -->
+    </section> 
     <!-- End Call the Backend Section -->
+
+     <!-- =======  Hardware Section ======= -->
+     <section id="hardware" class="services-list">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>HARDWARE</h2>
+
+        </div>
+
+        <div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
+          <div class="row g-0">
+            <div class="col-md-6">
+              <a href="assets/img/hardware/circuit.png" data-gallery="portfolio-gallery-branding"
+                class="glightbox preview-link"><img src="assets/img/hardware/circuit.png" class="img-fluid"
+                  alt=""></a>
+
+            </div>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h3 class="card-title">Main Circuit Diagram</h3>
+                <p class="card-text">
+                  This is the circuit we used for our project. The circuit includes 
+                  an Atmega328P in the middle. Other electronic and electrical components are as follows: 
+                  <ul>
+                    <li>10 uf capacitor
+                    </li>
+                    <li>22 pf capacitors 
+                    </li>
+                    <li>LED
+                    </li>
+                    <li>10k resistor
+                    </li>
+                    <li>16 MHz crystal oscillator 
+                  </ul>
+                  Then, all the other sensors and modulators are connected to this circuit. The circuit is powered by a rechargeable battery. 
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- <div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
+          <div class="row g-0">
+            <div class="col-md-6">
+              <a href="assets/img/frontend/frontend_tech.png" data-gallery="portfolio-gallery-branding"
+                class="glightbox preview-link"><img src="assets/img/frontend/frontend_tech.png" class="img-fluid"
+                  alt=""></a>
+
+            </div>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h3 class="card-title">Technology Stack</h3>
+                <p class="card-text">
+                <ul>
+                  <li>React <p>The React.js framework is an open-source JavaScript framework and library developed by
+                      Facebook.
+                      It’s used for building interactive user interfaces and web applications quickly and efficiently
+                      with significantly less code than you would with vanilla JavaScript.</p>
+                  </li>
+                  <li>JavaScript <p>JavaScript is a scripting or programming language that allows you to implement
+                      complex features on
+                      web pages.</p>
+                  </li>
+                </ul>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+      </div>
+    </section> -->
+    <!-- End Call the Hardware Section -->
 
 
     <!-- =======  Testing Section ======= -->
@@ -650,15 +723,19 @@
                 <h3 class="card-title">Our Software Testing Plan</h3>
                 <p class="card-text">
                 <ul>
-                  <li>Unit Testing <p>A unit test is a way of testing a unit - the smallest piece of code that can be logically 
-						isolated in a system. In most programming languages, that is a function, a subroutine, a method or property.</p>
+                  <li>Unit Testing <p>A unit test is a way of testing a unit - the smallest piece of code that can be
+                      logically
+                      isolated in a system. In most programming languages, that is a function, a subroutine, a method or
+                      property.</p>
                   </li>
-                  <li>E2E Testing <p>End to end testing (E2E testing) is a software testing method that involves testing an application's 
-						workflow from beginning to end.
+                  <li>E2E Testing <p>End to end testing (E2E testing) is a software testing method that involves testing
+                      an application's
+                      workflow from beginning to end.
                     </p>
                   </li>
-                  <li>Performance Testing<p>Performance testing is a testing measure that evaluates the speed, responsiveness and stability 
-						of a computer, network, software program or device under a workload. </p>
+                  <li>Performance Testing<p>Performance testing is a testing measure that evaluates the speed,
+                      responsiveness and stability
+                      of a computer, network, software program or device under a workload. </p>
                   </li>
                 </ul>
                 </p>
@@ -666,8 +743,8 @@
             </div>
           </div>
         </div>
-		
-		<div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
+
+        <div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
           <div class="row g-0">
             <div class="col-md-6" style="background-color: rgba(255,255,255)">
               <a href="assets\img\testing\jest.png" data-gallery="portfolio-gallery-branding"
@@ -680,9 +757,12 @@
                 <h3 class="card-title">Software Unit Testing</h3>
                 <p class="card-text">
                 <ul>
-                  <li>Jest is an open source JavaScript unit testing framework, used by Facebook to test all JavaScript code including 
-				  React applications. Jest is built on top of Jasmine. Unit testing of JavaScript code without jest framework needs Test runner 
-				  such as Mocha or Jasmine, assertion library such as Chai, mocks, stubs, mocking library such as Sinon. But Jest is having in built all features available.
+                  <li>Jest is an open source JavaScript unit testing framework, used by Facebook to test all JavaScript
+                    code including
+                    React applications. Jest is built on top of Jasmine. Unit testing of JavaScript code without jest
+                    framework needs Test runner
+                    such as Mocha or Jasmine, assertion library such as Chai, mocks, stubs, mocking library such as
+                    Sinon. But Jest is having in built all features available.
                   </li><br>
                   <li>What was tested? <p> The individual parts of the software system are working correctly.</p>
                   </li>
@@ -694,17 +774,17 @@
             </div>
           </div>
         </div>
-		
-		<div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
+
+        <div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
           <div class="row g-0">
-		  <h4 class="card-title" align="center">Result and Finding</h4>
-              <a href="assets\img\testing\jest_unit_testing_result.png" data-gallery="portfolio-gallery-branding"
-                class="glightbox preview-link"><img src="assets\img\testing\jest_unit_testing_result.png" class="img-fluid"
-                  alt="testing_tools" width="100%"></a>
-		  </div>
-		</div>
-		
-		<div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
+            <h4 class="card-title" align="center">Result and Finding</h4>
+            <a href="assets\img\testing\jest_unit_testing_result.png" data-gallery="portfolio-gallery-branding"
+              class="glightbox preview-link"><img src="assets\img\testing\jest_unit_testing_result.png"
+                class="img-fluid" alt="testing_tools" width="100%"></a>
+          </div>
+        </div>
+
+        <div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
           <div class="row g-0">
             <div class="col-md-6" style="background-color: rgba(255,255,255)">
               <a href="assets\img\testing\cypress.png" data-gallery="portfolio-gallery-branding"
@@ -717,9 +797,11 @@
                 <h3 class="card-title">Software E2E Testing</h3>
                 <p class="card-text">
                 <ul>
-                  <li>Cypress is a Java-Script based end to end testing framework which is built basically on top of Mocha JS. 
-				  It conveniently facilitates the process of end to end testing by giving the testers the chance to run their testing flows 
-				  using TDD or BDD assertion library along with the real time browser interaction.
+                  <li>Cypress is a Java-Script based end to end testing framework which is built basically on top of
+                    Mocha JS.
+                    It conveniently facilitates the process of end to end testing by giving the testers the chance to
+                    run their testing flows
+                    using TDD or BDD assertion library along with the real time browser interaction.
                   </li><br>
                   <li>What was tested? <p> The entire software product begin to end.</p>
                   </li>
@@ -731,18 +813,18 @@
             </div>
           </div>
         </div>
-		
-		<div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
-          <div class="row g-0">
-		  <h4 class="card-title" align="center">Result and Finding</h4>
-              <a href="assets\img\testing\cypress_result_finding.png" data-gallery="portfolio-gallery-branding"
-                class="glightbox preview-link"><img src="assets\img\testing\cypress_result_finding.png" class="img-fluid"
-                  alt="testing_tools" width="100%"></a>
-		  </div>
-		</div>
 
-		
-		<div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
+        <div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
+          <div class="row g-0">
+            <h4 class="card-title" align="center">Result and Finding</h4>
+            <a href="assets\img\testing\cypress_result_finding.png" data-gallery="portfolio-gallery-branding"
+              class="glightbox preview-link"><img src="assets\img\testing\cypress_result_finding.png" class="img-fluid"
+                alt="testing_tools" width="100%"></a>
+          </div>
+        </div>
+
+
+        <div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
           <div class="row g-0">
             <div class="col-md-6" style="background-color: rgba(255,255,255)">
               <a href="assets\img\testing\postman.png" data-gallery="portfolio-gallery-branding"
@@ -756,8 +838,10 @@
                 <p class="card-text">
                 <ul>
                   <li>Postman is a scalable API testing tool that quickly integrates into CI/CD pipeline.
-				  It started in 2012 as a side project by Abhinav Asthana to simplify API workflow in testing and development. 
-				  Postman API monitoring helps you identify problems with your API including poor performance, response errors, and outages.
+                    It started in 2012 as a side project by Abhinav Asthana to simplify API workflow in testing and
+                    development.
+                    Postman API monitoring helps you identify problems with your API including poor performance,
+                    response errors, and outages.
                   </li><br>
                   <li>What was tested? <p> Endpoints of the backend API.</p>
                   </li>
@@ -769,19 +853,61 @@
             </div>
           </div>
         </div>
-		
-		<div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
+
+        <div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
           <div class="row g-0">
-		  <h4 class="card-title" align="center">Result and Finding</h4>
-              <a href="assets\img\testing\postman_reult_api.png" data-gallery="portfolio-gallery-branding"
-                class="glightbox preview-link"><img src="assets\img\testing\postman_reult_api.png" class="img-fluid"
+            <h4 class="card-title" align="center">Result and Finding</h4>
+            <a href="assets\img\testing\postman_reult_api.png" data-gallery="portfolio-gallery-branding"
+              class="glightbox preview-link"><img src="assets\img\testing\postman_reult_api.png" class="img-fluid"
+                alt="testing_tools" width="100%"></a>
+            <a href="assets\img\testing\postman_result_performance.png" data-gallery="portfolio-gallery-branding"
+              class="glightbox preview-link"><img src="assets\img\testing\postman_result_performance.png"
+                class="img-fluid" alt="testing_tools" width="100%"></a>
+
+          </div>
+        </div>
+
+        <div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
+          <div class="row g-0">
+            <div class="col-md-6" style="background-color: rgba(255,255,255)">
+              <a href="assets\img\testing\platformio.png" data-gallery="portfolio-gallery-branding"
+                class="glightbox preview-link"><img src="assets\img\testing\platformio.png" class="img-fluid"
                   alt="testing_tools" width="100%"></a>
-				<a href="assets\img\testing\postman_result_performance.png" data-gallery="portfolio-gallery-branding"
-                class="glightbox preview-link"><img src="assets\img\testing\postman_result_performance.png" class="img-fluid"
-                  alt="testing_tools" width="100%"></a>
-				  
-		  </div>
-		</div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h3 class="card-title">Hardware Testing</h3>
+                <p class="card-text">
+                <ul>
+                  <li>PlatformIO Unit Testing allows you to segregate each part of the firmware/program and test 
+                    that the individual parts are working correctly. Using PlatformIO you can execute the same tests 
+                    on the local host machine (native), on the multiple local embedded devices/boards (connected to local 
+                    host machine), or on both
+                  </li><br>
+                  <li>What was tested? <p>The individual parts of the firmware are working correctly.</p>
+                  </li>
+                  <li>Why was it tested?<p>To ensure that the hardware part is working properly.</p>
+                  </li>
+                </ul>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="card mb-3 text-light" style="background-color: rgba(2, 17, 39,0.95)">
+          <div class="row g-0">
+            <h4 class="card-title" align="center">Result and Finding</h4>
+            <a href="assets\img\testing\postman_reult_api.png" data-gallery="portfolio-gallery-branding"
+              class="glightbox preview-link"><img src="assets\img\testing\postman_reult_api.png" class="img-fluid"
+                alt="testing_tools" width="100%"></a>
+            <a href="assets\img\testing\postman_result_performance.png" data-gallery="portfolio-gallery-branding"
+              class="glightbox preview-link"><img src="assets\img\testing\postman_result_performance.png"
+                class="img-fluid" alt="testing_tools" width="100%"></a>
+
+          </div>
+        </div> -->
 
       </div>
     </section> -->
@@ -802,7 +928,7 @@
 
 
       </div>
-    </section> 
+    </section>
     <!-- End Call the Timeline Section -->
 
 
