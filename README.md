@@ -81,6 +81,18 @@ This is the 3D design of the smart pet collar. The collar should not be too heav
 - Pulse of your pet
 - Track the pet’s vaccination time
 
+### MAIN CIRCUIT DIAGRAM
+
+<img width="461" alt="" src="https://raw.githubusercontent.com/cepdnaclk/e18-3yp-smart-pet-collar/main/docs/assets/img/hardware/circuit.png">
+
+This is the circuit we used for our project. The circuit includes an Atmega328P in the middle. Other electronic and electrical components are as follows: 
+- 10 uf capacitor
+- 22 pf capacitors
+- LED
+- 10k resistor
+- 16 MHz crystal oscillator
+
+Then, all the other sensors and modulators are connected to this circuit. The circuit is powered by a rechargeable battery. 
 
 ## LINKS
 
