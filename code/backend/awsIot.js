@@ -28,7 +28,7 @@ function run() {
 
   // Set handler for the device, it will get the messages from subscribers topics.
   device.on("message", function (topic, payload) {
-    const data = JSON.parse(payload.toString());
+    const data = JSON.parse(payload.toString().replace(/\*/g,""));
 
     if (data.type === "vitals") {
       addVital(data);
