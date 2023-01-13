@@ -82,7 +82,7 @@ long getSleepTrack() {
             // do nothing
         }
 
-        long int totalTimeTemp = totalTime;
+        unsigned long totalTimeTemp = totalTime;
         startTime = 0;
         totalTime = 0;
 
@@ -93,7 +93,7 @@ long getSleepTrack() {
 void setup() {
     Serial.begin(9600);  // For Serial Monitor
 
-    // BMI160.begin(BMI160GenClass::I2C_MODE, i2c_addr);
+    BMI160.begin(BMI160GenClass::I2C_MODE, i2c_addr);
     init_pulse();
     init_temp();
 }
