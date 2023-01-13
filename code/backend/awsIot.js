@@ -2,7 +2,6 @@
 const awsIot = require("aws-iot-device-sdk");
 const Device = require("./models/Device");
 const Pet = require("./models/Pet");
-//const sensor = require("node-dht-sensor");
 
 let device;
 function run() {
@@ -28,7 +27,7 @@ function run() {
 
   // Set handler for the device, it will get the messages from subscribers topics.
   device.on("message", function (topic, payload) {
-    const data = JSON.parse(payload.toString().replace(/\*/g,""));
+    const data = JSON.parse(payload.toString().replace(/\*/g, ""));
 
     if (data.type === "vitals") {
       addVital(data);
@@ -55,7 +54,7 @@ function addVital(data) {
         {
           $push: {
             vitals: {
-              dateTime: data.dateTime,
+              dateTime: new Date(),
               temperature: data.temperature,
               heartRate: data.heartRate,
             },
@@ -85,7 +84,7 @@ function addLocation(data) {
         {
           $push: {
             locations: {
-              dateTime: data.dateTime,
+              dateTime: new Date(),
               latitude: data.latitude,
               longitude: data.longitude,
             },
@@ -115,7 +114,7 @@ function addSleep(data) {
         {
           $push: {
             sleeps: {
-              startTime: data.startTime,
+              startTime: new Date(new Date().getTime() - data.duration * 60000),
               duration: data.duration,
             },
           },
@@ -135,7 +134,7 @@ function addSleep(data) {
 
 function sendData() {
   const obj = { type: "sync" };
-  console.log("STEP - Requesting data from AWS  IoT Core");
+  console.log("STEP - Requesting data from AWS IoT Core");
   device.publish("/device1/", JSON.stringify(obj));
 }
 
