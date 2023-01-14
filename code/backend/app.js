@@ -1,5 +1,5 @@
 const express = require("express");
-const awsIot = require('./awsIot');
+const mqtt_listener = require('./mqtt_listener');
 const { mongoose } = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -30,7 +30,7 @@ app.listen(port, async () => {
     })
     .then(() => {
       console.log("Connected to MongoDB");
-      awsIot.run();
+      mqtt_listener.run();
     })
     .catch((err) => {
       console.log(err);
