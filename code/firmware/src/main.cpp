@@ -1,16 +1,13 @@
 #define USE_ARDUINO_INTERRUPTS true  // Set-up low-level interrupts for most acurate BPM maths.
-#include <ArduinoJson.h>
 #include <BMI160Gen.h>
 #include <DallasTemperature.h>
 #include <OneWire.h>
 #include <PulseSensorPlayground.h>
+#include <SoftwareSerial.h>
+#include <TinyGPSPlus.h>
 
 // GLobal variables for device
-int DELAY = 2000;                               // global delay for sensor readings
 String DEVICE_ID = "639b588cfba69d57d680e6eb";  // device ID
-
-// JSon Buffer
-StaticJsonDocument<128> outputMessage;
 
 // Variables for gyro sensor
 const int i2c_addr = 0x68;
@@ -28,6 +25,17 @@ PulseSensorPlayground pulseSensor;  // Creates an instance of the PulseSensorPla
 OneWire oneWire(ONE_WIRE_BUS);        // Setup a oneWire instance to communicate with any OneWire devices
 DallasTemperature sensors(&oneWire);  // Pass our oneWire reference to Dallas Temperature.
 DeviceAddress insideThermometer;      // arrays to hold device address
+
+TinyGPSPlus gps;  // The TinyGPSPlus object
+
+// Software serial for A9G
+static const int RXPin = 6, TXPin = 5;
+static const uint32_t GPSBaud = 9600;
+String incomingData;
+SoftwareSerial ss(RXPin, TXPin);  // The serial connection to the GPS device
+
+String mqtt_command;
+String temp_json_str;
 
 // initialize pulse sensor
 void init_pulse() {
@@ -90,78 +98,120 @@ long getSleepTrack() {
     }
 }
 
+void init_a9g() {
+    ss.begin(GPSBaud);  // Begin A9G serial
+
+    // check A9G connection
+    Serial.println("Starting...");
+    ss.println("\r");
+    ss.println("AT\r");
+    delay(100);
+
+    // set the network registration status
+    ss.println("AT+CREG=2\r");
+    delay(3000);
+
+    // attach network
+    ss.println("AT+CGATT=1\r");
+    delay(3000);
+
+    // set netowrk param
+    ss.println("AT+CGDCONT=1,\"IP\",\"PPWAP\"\r");
+    delay(3000);
+
+    // Activate the PDP
+    ss.println("AT+CGACT=1,1\r");
+    delay(3000);
+
+    ss.println("AT+MQTTCONN=\"test.mosquitto.org\",1883,\"petsmart-1\",120,0,\"\",\"\"");
+    delay(3000);
+
+    ss.println("AT+GPS=1\r");
+    delay(100);
+
+    // location
+    ss.println("AT+GPSRD=5\r");
+    delay(100);
+
+    Serial.println("A9G initialized!");
+}
+
 void setup() {
     Serial.begin(9600);  // For Serial Monitor
 
     BMI160.begin(BMI160GenClass::I2C_MODE, i2c_addr);
     init_pulse();
     init_temp();
+    init_a9g();
 }
 
 void loop() {
-    float temperature = getTemperatureReading();
-    int myBPM = getPulseReading();  // Calls function on our pulseSensor object that returns BPM as an "int".
+    smartDelay(5000);
+
+    // Generate vitals AT+MQTT command for A9G
+    mqtt_command = "AT+MQTTPUB=\"/device1/\",\"";
+
+    temp_json_str = "{\"device_id\":\"";
+    temp_json_str += DEVICE_ID;
+    temp_json_str += "\",\"type\":\"vitals\",\"temperature\":";
+    temp_json_str += getTemperatureReading();
+    temp_json_str += ",\"heartRate\":";
+    temp_json_str += getPulseReading();
+    temp_json_str += "}";
+    temp_json_str.replace("\"", "*");
+
+    mqtt_command += temp_json_str;
+    mqtt_command += "\",0,0,0\r";
+    ss.print(mqtt_command);
+    ss.print("\r");
+
+    delay(1000);
+
+    // Generate locations AT+MQTT command for A9G
+    mqtt_command = "AT+MQTTPUB=\"/device1/\",\"";
+
+    temp_json_str = "{\"device_id\":\"";
+    temp_json_str += DEVICE_ID;
+    temp_json_str += "\",\"type\":\"locations\",\"longitude\":";
+    temp_json_str += String(gps.location.lng(), 6);
+    temp_json_str += ",\"latitude\":";
+    temp_json_str += String(gps.location.lat(), 6);
+    temp_json_str += "}";
+    temp_json_str.replace("\"", "*");
+
+    mqtt_command += temp_json_str;
+    mqtt_command += "\",0,0,0\r";
+    ss.print(mqtt_command);
+    ss.print("\r");
+
+    delay(1000);
+
     long sleepDuration = getSleepTrack();
-
-    // if (pulseSensor.sawStartOfBeat()) {            // Constantly test to see if "a beat happened".
-    //   Serial.print("BPM: ");                        // Print phrase "BPM: "
-    //   Serial.println(myBPM);                        // Print the value inside of myBPM.
-    // }
-
-    String mqtt_command = "";
-    String temp_json_str = "";
-
-    // Json object for vital reading
-    outputMessage.clear();
-    outputMessage["device_id"] = DEVICE_ID;
-    outputMessage["type"] = "vitals";
-    outputMessage["temperature"] = temperature;
-    outputMessage["heartRate"] = myBPM;
-    // outputMessage["dateTime"]="2021-05-01T12:00:00.000Z";
-
-    // Generate AT+MQTT command for A9G
-    mqtt_command = "AT+MQTTPUB=\"/device1/\",\"";
-    temp_json_str = "";
-    serializeJson(outputMessage, temp_json_str);
-    temp_json_str.replace("\"", "*");
-    mqtt_command += temp_json_str;
-    mqtt_command += "\",0,0,0";
-    Serial.println(mqtt_command);
-
-    // Json object for location reading
-    outputMessage.clear();
-    outputMessage["device_id"] = DEVICE_ID;
-    outputMessage["type"] = "locations";
-    outputMessage["longitude"] = 7.2525;
-    outputMessage["latitude"] = 80.591;
-    // outputMessage["dateTime"]="2021-05-01T12:00:00.000Z";
-
-    // Generate AT+MQTT command for A9G
-    mqtt_command = "AT+MQTTPUB=\"/device1/\",\"";
-    temp_json_str = "";
-    serializeJson(outputMessage, temp_json_str);
-    temp_json_str.replace("\"", "*");
-    mqtt_command += temp_json_str;
-    mqtt_command += "\",0,0,0";
-    Serial.println(mqtt_command);
-
     if (sleepDuration != 0) {
-        // Json object for sleep reading
-        outputMessage.clear();
-        outputMessage["device_id"] = DEVICE_ID;
-        outputMessage["type"] = "sleeps";
-        outputMessage["duration"] = sleepDuration;
-        // outputMessage["startTime"]="2021-05-01T12:00:00.000Z";
-
-        // Generate AT+MQTT command for A9G
+        // Generate sleeps AT+MQTT command for A9G
         mqtt_command = "AT+MQTTPUB=\"/device1/\",\"";
-        temp_json_str = "";
-        serializeJson(outputMessage, temp_json_str);
-        temp_json_str.replace("\"", "*");
-        mqtt_command += temp_json_str;
-        mqtt_command += "\",0,0,0";
-        Serial.println(mqtt_command);
-    }
 
-    delay(DELAY);  // considered best practice in a simple sketch
+        temp_json_str = "{\"device_id\":\"";
+        temp_json_str += DEVICE_ID;
+        temp_json_str += "\",\"type\":\"sleeps\",\"duration\":";
+        temp_json_str += sleepDuration;
+        temp_json_str += "}";
+        temp_json_str.replace("\"", "*");
+
+        mqtt_command += temp_json_str;
+        mqtt_command += "\",0,0,0\r";
+        ss.print(mqtt_command);
+        ss.print("\r");
+
+        delay(1000);
+    }
+}
+
+static void smartDelay(unsigned long ms) {
+    unsigned long start = millis();
+    do {
+        while (ss.available()) {
+            gps.encode(ss.read());
+        }
+    } while (millis() - start < ms);
 }
