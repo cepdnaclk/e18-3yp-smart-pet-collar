@@ -29,11 +29,11 @@ const navConfig = [
     path: "/dashboard/vaccination",
     icon: <Vaccines />,
   },
-  {
-    title: "training",
-    path: "/dashboard/training",
-    icon: <SportsSoccer />,
-  },
+ // {
+ //   title: "training",
+ //   path: "/dashboard/training",
+ //   icon: <SportsSoccer />,
+ // },
   {
     title: "settings",
     path: "/dashboard/settings",
