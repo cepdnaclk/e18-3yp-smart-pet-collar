@@ -22,11 +22,13 @@ import axios from "axios";
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
-  const user = useOutletContext();
+  const { user } = useOutletContext();
   const [vitals, setVitals] = useState([]);
+  const [overview, setOverview] = useState(null);
 
   useEffect(() => {
     getVitals();
+    getOverview();
     // eslint-disable-next-line
   }, []);
 
@@ -39,6 +41,41 @@ export default function DashboardAppPage() {
       })
       .then((response) => {
         setVitals(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const getOverview = () => {
+    axios
+      .get("http://43.205.113.198:3001/pet/overview", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then((response) => {
+        setOverview(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleSync = () => {
+    axios
+      .post(
+        "http://43.205.113.198:3001/pet/sync",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        getVitals();
+        getOverview();
       })
       .catch((error) => {
         console.log(error);
@@ -65,7 +102,7 @@ export default function DashboardAppPage() {
               Welcome to PetSmart Dashboard!
             </Typography>
           </Stack>
-          <Button variant="contained" startIcon={<Sync />}>
+          <Button variant="contained" startIcon={<Sync />} onClick={handleSync}>
             Sync now
           </Button>
         </Stack>
@@ -74,15 +111,15 @@ export default function DashboardAppPage() {
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
               title="Temperature"
-              value="30 C"
+              value={overview?.vital.temperature + " ℃"}
               icon={<Thermostat />}
             />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
-              title="Pulse Rate"
-              value="70 bpm"
+              title="Heart Rate"
+              value={overview?.vital.heartRate + " bpm"}
               color="info"
               icon={<MonitorHeart />}
             />
@@ -91,7 +128,7 @@ export default function DashboardAppPage() {
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
               title="Sleep Status"
-              value="3 Hours"
+              value={overview?.sleep.duration + " min"}
               color="warning"
               icon={<Bedtime />}
             />
@@ -100,7 +137,7 @@ export default function DashboardAppPage() {
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
               title="Distance from Home"
-              value="50 m"
+              value={overview?.location.distance + " m"}
               color="error"
               icon={<Straighten />}
             />
@@ -111,30 +148,24 @@ export default function DashboardAppPage() {
               title="Sleeping Time"
               subheader="Monitor your pet's sleeping time"
               chartLabels={[
-                "11/29/2022",
-                "11/30/2022",
-                "12/01/2022",
-                "12/02/2022",
-                "12/03/2022",
-                "12/04/2022",
-                "12/05/2022",
-                "12/06/2022",
-                "12/07/2022",
-                "12/08/2022",
-                "12/09/2022",
+                "12/11/2022",
+                "12/12/2022",
+                "12/13/2022",
+                "12/14/2022",
+                "12/15/2022",
+                "12/16/2022",
+                "12/17/2022",
+                "12/18/2022",
+                "12/19/2022",
+                "12/20/2022",
+                "12/21/2022",
               ]}
               chartData={[
                 {
-                  name: "Sleep hours",
+                  name: "Sleep Time",
                   type: "column",
                   fill: "solid",
-                  data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
-                },
-                {
-                  name: "Trendline",
-                  type: "line",
-                  fill: "solid",
-                  data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
+                  data: [300, 250, 360, 300, 450, 350, 640, 520, 590, 360, 390],
                 },
               ]}
             />
@@ -144,6 +175,7 @@ export default function DashboardAppPage() {
             <AppMap
               title={"Your pet's last known location"}
               subheader={"Last updated 2 hours ago"}
+              location={overview?.location}
             />
           </Grid>
 

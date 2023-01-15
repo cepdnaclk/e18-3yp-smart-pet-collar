@@ -70,6 +70,29 @@ router.post("/login", (req, res) => {
   });
 });
 
+// update user details
+router.put("/me", authenticateToken, (req, res) => {
+  User.findByIdAndUpdate(
+    req.user.user_id,
+    {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      phone: req.body.phone,
+      longitude: req.body.longitude,
+      latitude: req.body.latitude,
+    },
+    { new: true },
+    function (err, user) {
+      if (err) {
+        console.log(err);
+        res.status(400).send("Error updating user!");
+      } else {
+        res.json(user);
+      }
+    }
+  );
+});
+
 // register a device under a user
 router.post("/me/device", authenticateToken, (req, res) => {
   Device.findById(req.body.deviceId, function (err, device) {
@@ -129,6 +152,55 @@ router.post("/me/pet", authenticateToken, (req, res) => {
         }
       );
       // Todo add pet to device
+    }
+  });
+});
+
+// get user's pet
+router.get("/me/pet", authenticateToken, (req, res) => {
+  User.findById(req.user.user_id, function (err, user) {
+    if (err || !user) {
+      res.status(400).send("Error fetching user!");
+    } else {
+      Pet.findById(user.pet, function (err, pet) {
+        if (err || !pet) {
+          res.status(400).send("Error fetching pet!");
+        } else {
+          res.json(pet);
+        }
+      });
+    }
+  });
+});
+
+// edit user's pet
+router.put("/me/pet", authenticateToken, (req, res) => {
+  User.findById(req.user.user_id, function (err, user) {
+    if (err || !user) {
+      res.status(400).send("Error fetching user!");
+    } else {
+      Pet.findByIdAndUpdate(
+        user.pet,
+        {
+          name: req.body.name,
+          sex: req.body.sex,
+          breed: req.body.breed,
+          dateOfBirth: req.body.dateOfBirth,
+          weight: req.body.weight,
+          color: req.body.color,
+          species: req.body.species,
+          specialCharacteristics: req.body.specialCharacteristics,
+        },
+        { new: true },
+        function (err, pet) {
+          if (err) {
+            console.log(err);
+            res.status(400).send("Error updating pet!");
+          } else {
+            res.json(pet);
+          }
+        }
+      );
     }
   });
 });

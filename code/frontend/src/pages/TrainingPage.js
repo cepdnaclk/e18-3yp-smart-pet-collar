@@ -13,7 +13,7 @@ import { useOutletContext } from "react-router-dom";
 // ----------------------------------------------------------------------
 
 export default function TrainingPage() {
-  const user = useOutletContext();
+  const { user } = useOutletContext();
 
   return (
     <>

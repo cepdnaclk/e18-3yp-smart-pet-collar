@@ -73,7 +73,7 @@ What if the device lost network connectivity at some point? To address that issu
 
 <img width="461" alt="" src="https://raw.githubusercontent.com/cepdnaclk/e18-3yp-smart-pet-collar/main/docs/assets/img/3d_module/3d_design.jpeg">
 
-We proposed a solution that is a smart pet belt. It is a wearable and waterproof device. Therefore, you need to wear it in your pet and connect it with your pc or mobile phone. Simply, you can get corresponding details very easily.
+This is the 3D design of the smart pet collar. The collar should not be too heavy on the pet's neck. As a result, we designed it in this manner. Here, you can see the rechargable battery on the top of the collar. And also, the main circuit board and speaker are also on the top of the collar. You can see two sensors inside the collar, which are a temperature sensor and a pulse sensor. The gyroscope sensor is on the main circuit board. Our product features are,
 
 - Track your pet
 - Analyze your pet’s sleep
@@ -81,6 +81,18 @@ We proposed a solution that is a smart pet belt. It is a wearable and waterproof
 - Pulse of your pet
 - Track the pet’s vaccination time
 
+### MAIN CIRCUIT DIAGRAM
+
+<img width="461" alt="" src="https://raw.githubusercontent.com/cepdnaclk/e18-3yp-smart-pet-collar/main/docs/assets/img/hardware/circuit.png">
+
+This is the circuit we used for our project. The circuit includes an Atmega328P in the middle. Other electronic and electrical components are as follows: 
+- 10 uf capacitor
+- 22 pf capacitors
+- LED
+- 10k resistor
+- 16 MHz crystal oscillator
+
+Then, all the other sensors and modulators are connected to this circuit. The circuit is powered by a rechargeable battery. 
 
 ## LINKS
 

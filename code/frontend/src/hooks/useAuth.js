@@ -8,6 +8,14 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useLocalStorage("user", null);
   const navigate = useNavigate();
 
+  function updateUserDetails(updatedUser) {
+    let tempUser = { ...user };
+    tempUser.firstName = updatedUser.firstName;
+    tempUser.lastName = updatedUser.lastName;
+    tempUser.phone = updatedUser.phone;
+    setUser(tempUser);
+  }
+
   const login = async (data) => {
     setUser(data);
     navigate("/dashboard", { replace: true });
@@ -23,6 +31,7 @@ export const AuthProvider = ({ children }) => {
       user,
       login,
       logout,
+      updateUserDetails,
     }),
     // eslint-disable-next-line
     [user]
