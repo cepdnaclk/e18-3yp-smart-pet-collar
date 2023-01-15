@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 
 dotenv.config(); // Load environment variables
 
-/***
+/*
  * Using MQTT over TCP with mqtt and mqtts protocols
  * EMQX's mqtt connection default port is 1883, mqtts is 8883
  */
@@ -39,11 +39,11 @@ function run() {
   client.on("message", function (topic, message) {
     const data = JSON.parse(message.toString().replace(/\*/g, "\""));
 
-    if (data.type === "vitals") {
+    if (data.type === "v") {
       addVital(data);
-    } else if (data.type === "locations") {
+    } else if (data.type === "l") {
       addLocation(data);
-    } else if (data.type === "sleeps") {
+    } else if (data.type === "s") {
       addSleep(data);
     }
   });
@@ -54,7 +54,7 @@ function run() {
 }
 
 function addVital(data) {
-  Device.findById(data.device_id, (err, device) => {
+  Device.findById(data.d_id, (err, device) => {
     if (err) {
       console.log(err);
     }
@@ -65,8 +65,8 @@ function addVital(data) {
           $push: {
             vitals: {
               dateTime: new Date(),
-              temperature: data.temperature,
-              heartRate: data.heartRate,
+              temperature: data.t,
+              heartRate: data.h,
             },
           },
         },
@@ -84,7 +84,7 @@ function addVital(data) {
 }
 
 function addLocation(data) {
-  Device.findById(data.device_id, (err, device) => {
+  Device.findById(data.d_id, (err, device) => {
     if (err) {
       console.log(err);
     }
@@ -95,8 +95,8 @@ function addLocation(data) {
           $push: {
             locations: {
               dateTime: new Date(),
-              latitude: data.latitude,
-              longitude: data.longitude,
+              latitude: data.lat,
+              longitude: data.lng,
             },
           },
         },
@@ -114,7 +114,7 @@ function addLocation(data) {
 }
 
 function addSleep(data) {
-  Device.findById(data.device_id, (err, device) => {
+  Device.findById(data.d_id, (err, device) => {
     if (err) {
       console.log(err);
     }
@@ -125,7 +125,7 @@ function addSleep(data) {
           $push: {
             sleeps: {
               startTime: new Date(new Date().getTime() - data.duration * 60000),
-              duration: data.duration,
+              duration: data.d,
             },
           },
         },
