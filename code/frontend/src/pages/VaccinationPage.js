@@ -105,6 +105,8 @@ export default function VaccinationPage() {
 
   const [vaccinations, setVaccinations] = useState([]);
 
+  const [upcomingVaccinations, setUpcomingVaccinations] = useState([]);
+
   const [scheduledDate, setScheduledDate] = useState(null);
 
   const [selectedItemId, setSelectedItemId] = useState(null);
@@ -124,6 +126,15 @@ export default function VaccinationPage() {
       })
       .then((response) => {
         setVaccinations(response.data);
+
+        // get 6 upcoming vaccinations
+        const topSixVaccinations = response.data.filter(
+          (vaccination) => vaccination.status === "pending"
+        );
+        topSixVaccinations.sort(
+          (a, b) => new Date(a.scheduledDate) - new Date(b.scheduledDate)
+        );
+        setUpcomingVaccinations(topSixVaccinations.slice(0, 6));
       })
       .catch((error) => {
         console.log(error);
@@ -430,18 +441,7 @@ export default function VaccinationPage() {
           <Grid item xs={12} md={6} lg={3}>
             <AppOrderTimeline
               title="Upcoming Vaccinations"
-              list={[...Array(5)].map((_, index) => ({
-                id: faker.datatype.uuid(),
-                title: [
-                  "Rabies Vaccine I",
-                  "Rabies Vaccine II",
-                  "Testing Vaccine I",
-                  "Testing Vaccine II",
-                  "Testing Vaccine III",
-                ][index],
-                type: `order${index + 1}`,
-                time: faker.date.past(),
-              }))}
+              list={upcomingVaccinations}
             />
           </Grid>
 
