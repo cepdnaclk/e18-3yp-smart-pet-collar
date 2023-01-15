@@ -1,6 +1,6 @@
 const express = require("express");
 const { authenticateToken } = require("../auth/jwt");
-const { sendData } = require("../awsIot");
+const { sendData } = require("../mqtt_listener");
 const Pet = require("../models/Pet");
 const User = require("../models/User");
 const Vaccination = require("../models/Vaccination");
