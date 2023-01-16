@@ -42,6 +42,10 @@ export default function DashboardLayout() {
     return <Navigate to="/login" />;
   }
 
+  if (window.location.pathname !== "/dashboard/home" && !user.pet) {
+    return <Navigate to="/dashboard/home" />;
+  }
+
   return (
     <StyledRoot>
       <Header user={user} onOpenNav={() => setOpen(true)} />
