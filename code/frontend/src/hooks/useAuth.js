@@ -18,6 +18,9 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (data) => {
     setUser(data);
+    setTimeout(() => {
+      logout();
+    }, 3600000);
     navigate("/dashboard", { replace: true });
   };
 
