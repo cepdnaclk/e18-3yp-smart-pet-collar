@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
     tempUser.firstName = updatedUser.firstName;
     tempUser.lastName = updatedUser.lastName;
     tempUser.phone = updatedUser.phone;
+    tempUser.pet = updatedUser.pet;
     setUser(tempUser);
   }
 
