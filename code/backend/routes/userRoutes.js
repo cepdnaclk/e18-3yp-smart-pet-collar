@@ -147,7 +147,7 @@ router.post("/me/pet", authenticateToken, (req, res) => {
             console.log(err);
             res.status(400).send("Error adding pet to user!");
           } else {
-            res.json(pet);
+            res.json(user);
           }
         }
       );
