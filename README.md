@@ -94,6 +94,17 @@ This is the circuit we used for our project. The circuit includes an Atmega328P 
 
 Then, all the other sensors and modulators are connected to this circuit. The circuit is powered by a rechargeable battery. 
 
+### THE BATTERY SIDE CIRCUIT
+
+<img width="461" alt="" src="https://raw.githubusercontent.com/cepdnaclk/e18-3yp-smart-pet-collar/main/docs/assets/img/hardware/battery_diagram.png">
+
+## FINAL PRODUCT
+
+<img width="461" alt="" src="https://raw.githubusercontent.com/cepdnaclk/e18-3yp-smart-pet-collar/main/docs/assets/img/real_product/2.jpeg">
+<img width="461" alt="" src="https://raw.githubusercontent.com/cepdnaclk/e18-3yp-smart-pet-collar/main/docs/assets/img/real_product/1.jpeg">
+<img width="461" alt="" src="https://raw.githubusercontent.com/cepdnaclk/e18-3yp-smart-pet-collar/main/docs/assets/img/real_product/3.jpg">
+<img width="461" alt="" src="https://raw.githubusercontent.com/cepdnaclk/e18-3yp-smart-pet-collar/main/docs/assets/img/real_product/4.jpg">
+
 ## LINKS
 
 - [Project Repository](https://github.com/cepdnaclk/e18-3yp-smart-pet-collar)
