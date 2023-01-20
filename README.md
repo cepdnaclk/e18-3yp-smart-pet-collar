@@ -105,6 +105,11 @@ Then, all the other sensors and modulators are connected to this circuit. The ci
 <img width="461" alt="" src="https://raw.githubusercontent.com/cepdnaclk/e18-3yp-smart-pet-collar/main/docs/assets/img/real_product/3.jpg">
 <img width="461" alt="" src="https://raw.githubusercontent.com/cepdnaclk/e18-3yp-smart-pet-collar/main/docs/assets/img/real_product/4.jpg">
 
+## FINAL PRODUCT VIDEO
+
+[![PetSmart](https://i.pinimg.com/originals/0b/b3/5f/0bb35fa5da9d484e5de1932bd5db1ff5.jpg)](https://www.youtube.com/watch?v=Klu49A1_L-o)
+
+
 ## LINKS
 
 - [Project Repository](https://github.com/cepdnaclk/e18-3yp-smart-pet-collar)
